@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/lavar">
+    <fragment
+        android:id="@+id/lavar"
+        android:name="com.example.car_wash_el_catracho.Lavar"
+
+        tools:layout="@layout/fragment_lavar" >
+        <action
+            android:id="@+id/action_lavar_to_cambio"
+            app:destination="@id/cambio"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/anticipate_interpolator" />
+    </fragment>
+    <fragment
+        android:id="@+id/cambio"
+        android:name="com.example.car_wash_el_catracho.Cambio"
+        android:label="fragment_cambio"
+        tools:layout="@layout/fragment_cambio" >
+        <action
+            android:id="@+id/action_cambio_to_motor"
+            app:destination="@id/motor" />
+    </fragment>
+    <fragment
+        android:id="@+id/motor"
+        android:name="com.example.car_wash_el_catracho.Motor"
+        android:label="fragment_motor"
+        tools:layout="@layout/fragment_motor" />
+    <fragment
+        android:id="@+id/auto"
+        android:name="com.example.car_wash_el_catracho.auto"
+        android:label="fragment_auto"
+        tools:layout="@layout/fragment_auto" />
+    <fragment
+        android:id="@+id/historial2"
+        android:name="com.example.car_wash_el_catracho.historial"
+        android:label="fragment_historial"
+        tools:layout="@layout/fragment_historial" />
+</navigation>
