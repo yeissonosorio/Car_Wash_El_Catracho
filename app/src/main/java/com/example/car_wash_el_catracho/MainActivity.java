@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         btnregis = (Button) findViewById(R.id.BtnRegistrar);
         txtolvi = (TextView) findViewById(R.id.txtolvi);
         btnentrar=(Button) findViewById(R.id.btnLoging);
-
+        password =(EditText) findViewById(R.id.txtpasswordEn);
         email = (EditText) findViewById(R.id.txtcorreoEn);
 
         txtolvi.setOnClickListener(new View.OnClickListener() {
@@ -49,16 +50,28 @@ public class MainActivity extends AppCompatActivity {
         btnentrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(email.getText().toString().equals("admin")){
-                    Intent intent = new Intent(getApplicationContext(),Cotizacion.class);
-                    startActivity(intent);
-                }
-                else{
-                    Intent intent = new Intent(getApplicationContext(),Navegacion.class);
-                    startActivity(intent);
+                if (validar()==true) {
+                    if (email.getText().toString().equals("admin")) {
+                        Intent intent = new Intent(getApplicationContext(), Cotizacion.class);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(getApplicationContext(), Navegacion.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });
 
+    }
+
+    private boolean validar() {
+        if(password.getText().toString().replace("\\s","").isEmpty()){
+            Toast.makeText(getApplicationContext(),"LLene el campo password",Toast.LENGTH_LONG).show();
+            return false;
+        } else if (email.getText().toString().replace("\\s","").isEmpty()) {
+            Toast.makeText(getApplicationContext(),"LLene el campo email",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
     }
 }

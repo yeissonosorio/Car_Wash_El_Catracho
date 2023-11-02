@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class Recuperar extends AppCompatActivity {
     Button btncorreo;
@@ -18,7 +17,7 @@ public class Recuperar extends AppCompatActivity {
         setContentView(R.layout.activity_recuperar);
 
         btncorreo= (Button) findViewById(R.id.btnvercorreo);
-        txtcorreo = (EditText) findViewById(R.id.txtcorreover);
+        txtcorreo = (EditText) findViewById(R.id.txtCorreoRecu);
 
         btncorreo.setOnClickListener(new View.OnClickListener() {
             @Override

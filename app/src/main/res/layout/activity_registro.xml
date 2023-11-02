@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/txtModelo"
+        android:id="@+id/txtapelllido"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -35,7 +35,7 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtmarca" />
+        app:layout_constraintTop_toBottomOf="@+id/txtnombre" />
 
     <EditText
         android:id="@+id/txtyear"
@@ -51,7 +51,7 @@
         android:inputType="text|textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtModelo" />
+        app:layout_constraintTop_toBottomOf="@+id/txtapelllido" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <EditText
-        android:id="@+id/txtmarca"
+        android:id="@+id/txtnombre"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"

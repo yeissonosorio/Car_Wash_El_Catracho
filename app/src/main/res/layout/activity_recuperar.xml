@@ -8,7 +8,7 @@
     tools:context=".Recuperar">
 
     <EditText
-        android:id="@+id/txtcorreover"
+        android:id="@+id/txtCorreoRecu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.927"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtcorreover" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCorreoRecu" />
 
     <TextView
         android:id="@+id/textView7"

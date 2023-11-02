@@ -15,7 +15,7 @@ public class password extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
 
-        cambiar = (Button) findViewById(R.id.btnrestablecer);
+        cambiar = (Button) findViewById(R.id.btnCambiarContra);
 
         cambiar.setOnClickListener(new View.OnClickListener() {
             @Override

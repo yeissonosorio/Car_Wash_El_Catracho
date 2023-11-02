@@ -25,7 +25,7 @@ public class auto extends Fragment {
         agre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity().getApplicationContext(),Agregarveichulo.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(),Agregar_Auto.class);
 
                 startActivity(intent);
             }
