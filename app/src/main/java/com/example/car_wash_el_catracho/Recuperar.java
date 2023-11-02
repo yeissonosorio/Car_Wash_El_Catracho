@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Recuperar extends AppCompatActivity {
     Button btncorreo;
@@ -22,11 +23,27 @@ public class Recuperar extends AppCompatActivity {
         btncorreo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Verificacion.class);
-                intent.putExtra("valor","Recuperar");
-                intent.putExtra("correo",txtcorreo.getText().toString());
-                startActivity(intent);
+                if(validar()==true) {
+                    Intent intent = new Intent(getApplicationContext(), Verificacion.class);
+                    intent.putExtra("valor", "Recuperar");
+                    intent.putExtra("correo", txtcorreo.getText().toString());
+                    startActivity(intent);
+                }
             }
         });
+    }
+
+    private boolean validar() {
+        boolean valor=false;
+
+        String corr = txtcorreo.getText().toString().replaceAll("\\s","");
+
+        if(corr.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Ingrese su correo electronico",Toast.LENGTH_LONG).show();
+        }
+        else {
+            valor=true;
+        }
+        return valor;
     }
 }

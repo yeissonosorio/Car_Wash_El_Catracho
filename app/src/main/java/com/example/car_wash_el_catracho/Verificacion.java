@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Verificacion extends AppCompatActivity {
     Button ver;
     String valor;
+
+    EditText vericod;
 
     TextView envio;
 
@@ -25,20 +28,23 @@ public class Verificacion extends AppCompatActivity {
 
         ver = (Button) findViewById(R.id.btnverificar);
         envio = (TextView) findViewById(R.id.txtxrenvio);
+        vericod = (EditText) findViewById(R.id.TxtCodigo);
 
 
         ver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                valor = getIntent().getStringExtra("valor");
+                if(validacion()==true) {
+                    valor = getIntent().getStringExtra("valor");
 
-                if(valor.equals("Recuperar")) {
-                    Toast.makeText(getApplicationContext(),valor,Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(), password.class);
-                    startActivity(intent);
-                } else if (valor.equals("Crear")) {
-                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                    startActivity(intent);
+                    if (valor.equals("Recuperar")) {
+                        Toast.makeText(getApplicationContext(), valor, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(), password.class);
+                        startActivity(intent);
+                    } else if (valor.equals("Crear")) {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
                 }
 
             }
@@ -73,5 +79,20 @@ public class Verificacion extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private boolean validacion() {
+        boolean valor=false;
+
+        String cod = vericod.getText().toString().replaceAll("\\s","");
+
+
+        if(cod.isEmpty()){
+            Toast.makeText(getApplicationContext(),"LLene el Campo de codigo",Toast.LENGTH_LONG).show();
+        }
+        else {
+            valor=true;
+        }
+        return valor;
     }
 }

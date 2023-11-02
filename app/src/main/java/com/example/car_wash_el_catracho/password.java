@@ -6,23 +6,51 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class password extends AppCompatActivity {
 
     Button cambiar;
+
+    EditText password,verpassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
 
         cambiar = (Button) findViewById(R.id.btnCambiarContra);
+        password = (EditText) findViewById(R.id.txtpassNew);
+        verpassword = (EditText) findViewById(R.id.txtpassVeriNew);
 
         cambiar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
+                if(validar()==true) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
             }
         });
+    }
+
+    private boolean validar() {
+        boolean valor=false;
+
+        String pass = password.getText().toString().replaceAll("\\s","");
+        String val = verpassword.getText().toString().replaceAll("\\s","");
+
+        if(val.isEmpty()&&pass.isEmpty()){
+            Toast.makeText(getApplicationContext(),"LLene todos los campos",Toast.LENGTH_LONG).show();
+        } else if (pass.isEmpty()) {
+            Toast.makeText(getApplicationContext(),"LLene el campo de contraseña",Toast.LENGTH_LONG).show();
+        } else if (val.isEmpty()) {
+            Toast.makeText(getApplicationContext(),"LLene el campo de verificar contraseña",Toast.LENGTH_LONG).show();
+        }
+        else {
+            valor=true;
+        }
+        return valor;
     }
 }

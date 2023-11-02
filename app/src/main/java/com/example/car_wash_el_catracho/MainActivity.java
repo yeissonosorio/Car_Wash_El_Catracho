@@ -65,13 +65,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean validar() {
-        if(password.getText().toString().replace("\\s","").isEmpty()){
-            Toast.makeText(getApplicationContext(),"LLene el campo password",Toast.LENGTH_LONG).show();
-            return false;
-        } else if (email.getText().toString().replace("\\s","").isEmpty()) {
+        boolean valor=false;
+
+        String pass = password.getText().toString().replaceAll("\\s","");
+        String em = email.getText().toString().replaceAll("\\s","");
+
+        if(em.isEmpty()&&pass.isEmpty()){
+            Toast.makeText(getApplicationContext(),"LLene todos los campos",Toast.LENGTH_LONG).show();
+        } else if (em.isEmpty()) {
             Toast.makeText(getApplicationContext(),"LLene el campo email",Toast.LENGTH_LONG).show();
-            return false;
+        } else if (pass.isEmpty()) {
+            Toast.makeText(getApplicationContext(),"LLene el campo contraseña",Toast.LENGTH_LONG).show();
         }
-        return true;
+        else {
+            valor=true;
+        }
+        return valor;
     }
 }
