@@ -17,9 +17,9 @@
 
         <TextView
             android:id="@+id/tituloL"
-            android:fontFamily="sans-serif-black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
             android:text="Cotizaciones pendientes"
             android:textAlignment="center"
             android:textColor="@color/white"
@@ -35,14 +35,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="-36dp">
+        tools:layout_editor_absoluteX="-200dp"
+        tools:layout_editor_absoluteY="-16dp">
 
         <TextView
             android:id="@+id/tvprecio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="28dp"
             android:fontFamily="sans-serif-condensed"
             android:text="Precio"
             android:textSize="20dp"
@@ -92,7 +92,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="104dp"
             android:layout_marginEnd="20dp"
             android:text="Hacer Reservacion"
             app:layout_constraintEnd_toEndOf="parent"
@@ -105,13 +105,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="108dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="20dp"
             android:text="Volver al Menu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/HoraL" />
+            app:layout_constraintTop_toBottomOf="@+id/btnReserva" />
 
         <TextView
             android:id="@+id/textView14"
@@ -127,5 +127,19 @@
             app:layout_constraintHorizontal_bias="0.03"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tipoL" />
+
+        <ImageButton
+            android:id="@+id/btnubicacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#030E78"
+            app:layout_constraintBottom_toTopOf="@+id/btnReserva"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.904"
+            app:layout_constraintStart_toEndOf="@+id/tvprecio"
+            app:layout_constraintTop_toBottomOf="@+id/HoraL"
+            app:layout_constraintVertical_bias="0.196"
+            app:srcCompat="@drawable/baseline_add_location_24" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

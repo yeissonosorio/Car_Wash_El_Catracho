@@ -1,18 +1,32 @@
 package com.example.car_wash_el_catracho;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.PackageManagerCompat;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
 
 public class tipo_Lavado extends AppCompatActivity {
     Button btnvol;
+
+    ImageButton btngps;
 
     Spinner lugar,hora;
 
@@ -26,6 +40,9 @@ public class tipo_Lavado extends AppCompatActivity {
         titul = (TextView) findViewById(R.id.tituloL);
         lugar = (Spinner) findViewById(R.id.tipoL);
         hora = (Spinner) findViewById(R.id.HoraL);
+        btngps = (ImageButton) findViewById(R.id.btnubicacion);
+
+        btngps.setVisibility(View.INVISIBLE);
 
         ArrayAdapter<CharSequence> adp = ArrayAdapter.createFromResource(this,R.array.combo_opción, android.R.layout.simple_expandable_list_item_1);
         lugar.setAdapter(adp);
@@ -48,19 +65,25 @@ public class tipo_Lavado extends AppCompatActivity {
                 if (servicio.equals("fuera")){
                     if(lugar.getSelectedItemId()==1) {
                         tipo.setText("Precio: L.100");
+                        btngps.setVisibility(View.INVISIBLE);
                     } else if (lugar.getSelectedItemId()==2) {
                         tipo.setText("Precio: L.150");
+                        btngps.setVisibility(View.VISIBLE);
                     }
                     else{
                         tipo.setText("");
+                        btngps.setVisibility(View.INVISIBLE);
                     }
                 } else if (servicio.equals("Completo")) {
                     if(lugar.getSelectedItemId()==1) {
+                        btngps.setVisibility(View.INVISIBLE);
                         tipo.setText("Precio: L.150");
                     } else if (lugar.getSelectedItemId()==2) {
+                        btngps.setVisibility(View.VISIBLE);
                         tipo.setText("Precio: L.200");
                     }
                     else {
+                        btngps.setVisibility(View.INVISIBLE);
                         tipo.setText("");
                     }
                 }
@@ -79,6 +102,12 @@ public class tipo_Lavado extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),Navegacion.class);
                 startActivity(intent);
+            }
+        });
+
+        btngps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
             }
         });
 
