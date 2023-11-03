@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Agregar_Auto">
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/fue"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:background="@drawable/ronub_down"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:text="Agregar Autos"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+  <EditText
+      android:id="@+id/txtmarca"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="40dp"
+      android:layout_marginTop="100dp"
+      android:layout_marginEnd="40dp"
+      android:ems="10"
+      android:hint="Marca"
+      android:inputType="text"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/fue" />
+
+  <EditText
+      android:id="@+id/txtmodelo"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="40dp"
+      android:layout_marginTop="20dp"
+      android:layout_marginEnd="40dp"
+      android:ems="10"
+      android:hint="modelo"
+      android:inputType="text"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/txtmarca" />
+
+  <EditText
+      android:id="@+id/txtyea"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="40dp"
+      android:layout_marginTop="20dp"
+      android:layout_marginEnd="40dp"
+      android:ems="10"
+      android:hint="año"
+      android:inputType="text"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/txtmodelo" />
+
+  <EditText
+      android:id="@+id/txtaceite"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="40dp"
+      android:layout_marginTop="20dp"
+      android:layout_marginEnd="40dp"
+      android:ems="10"
+      android:hint="Tipo de Aceite"
+      android:inputType="text"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/txtyea" />
+
+  <Button
+      android:id="@+id/btncotizacion"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="40dp"
+      android:layout_marginTop="40dp"
+      android:layout_marginEnd="40dp"
+      android:text="Enviar Cotización"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/txtaceite" />
+
+  <Button
+      android:id="@+id/btnatrascot"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="40dp"
+      android:layout_marginTop="20dp"
+      android:layout_marginEnd="40dp"
+      android:text="Atras"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/btncotizacion" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
