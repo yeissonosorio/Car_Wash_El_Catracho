@@ -39,7 +39,7 @@ public class Recuperar extends AppCompatActivity {
         String corr = txtcorreo.getText().toString().replaceAll("\\s","");
 
         if(corr.isEmpty()){
-            Toast.makeText(getApplicationContext(),"Ingrese su correo electronico",Toast.LENGTH_LONG).show();
+            txtcorreo.setError("Debe llenar este campo");
         }
         else {
             valor=true;

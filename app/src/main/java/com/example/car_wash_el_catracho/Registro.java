@@ -51,18 +51,18 @@ public class Registro extends AppCompatActivity {
         if(nom.isEmpty()&&apell.isEmpty()&&cor.isEmpty()&&cont.isEmpty()&&vercont.isEmpty()){
             Toast.makeText(getApplicationContext(),"LLene todos los campos",Toast.LENGTH_LONG).show();
         } else if (nom.isEmpty()) {
-            Toast.makeText(getApplicationContext(),"LLene el campo nombre",Toast.LENGTH_LONG).show();
+           nombre.setError("Debe llenar este campo");
         } else if (apell.isEmpty()) {
-            Toast.makeText(getApplicationContext(),"LLene el campo apellido",Toast.LENGTH_LONG).show();
+            apellido.setError("Debe llenar este campo");
         }
         else if (cor.isEmpty()) {
-            Toast.makeText(getApplicationContext(),"LLene el campo correo",Toast.LENGTH_LONG).show();
+            correo.setError("Debe llenar este campo");
         }
         else if (cont.isEmpty()) {
-            Toast.makeText(getApplicationContext(),"LLene el campo contraseña",Toast.LENGTH_LONG).show();
+            contra.setError("Debe llenar este campo");
         }
         else if (vercont.isEmpty()) {
-            Toast.makeText(getApplicationContext(),"LLene el campo Verificar",Toast.LENGTH_LONG).show();
+            vericontra.setError("Debe llenar este campo");
         }
         else {
             valor=true;

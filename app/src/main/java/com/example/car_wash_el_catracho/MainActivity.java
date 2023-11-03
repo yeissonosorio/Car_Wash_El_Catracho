@@ -73,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
         if(em.isEmpty()&&pass.isEmpty()){
             Toast.makeText(getApplicationContext(),"LLene todos los campos",Toast.LENGTH_LONG).show();
         } else if (em.isEmpty()) {
-            Toast.makeText(getApplicationContext(),"LLene el campo email",Toast.LENGTH_LONG).show();
+            email.setError("Debe llenar este campo");
         } else if (pass.isEmpty()) {
-            Toast.makeText(getApplicationContext(),"LLene el campo contraseña",Toast.LENGTH_LONG).show();
+            password.setError("Debe llenar este campo");
         }
         else {
             valor=true;

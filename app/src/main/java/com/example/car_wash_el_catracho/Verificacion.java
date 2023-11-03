@@ -88,7 +88,7 @@ public class Verificacion extends AppCompatActivity {
 
 
         if(cod.isEmpty()){
-            Toast.makeText(getApplicationContext(),"LLene el Campo de codigo",Toast.LENGTH_LONG).show();
+            vericod.setError("Debe llenar este campo");
         }
         else {
             valor=true;

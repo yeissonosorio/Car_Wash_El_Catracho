@@ -44,9 +44,9 @@ public class password extends AppCompatActivity {
         if(val.isEmpty()&&pass.isEmpty()){
             Toast.makeText(getApplicationContext(),"LLene todos los campos",Toast.LENGTH_LONG).show();
         } else if (pass.isEmpty()) {
-            Toast.makeText(getApplicationContext(),"LLene el campo de contraseña",Toast.LENGTH_LONG).show();
+           password.setError("Debe llenar este campo");
         } else if (val.isEmpty()) {
-            Toast.makeText(getApplicationContext(),"LLene el campo de verificar contraseña",Toast.LENGTH_LONG).show();
+            verpassword.setError("Debe llenar este campo");
         }
         else {
             valor=true;
