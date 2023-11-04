@@ -1,7 +1,12 @@
 package com.example.car_wash_el_catracho;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -18,6 +23,16 @@ public class Agregar_Auto extends AppCompatActivity {
         aceite=(EditText) findViewById(R.id.txtaceite);
 
         validar();
+
+        aceite.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
+                // Oculta el teclado
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                return true;
+            }
+            return false;
+        });
     }
 
     private boolean validar() {
