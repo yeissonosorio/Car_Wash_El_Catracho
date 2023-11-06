@@ -1,6 +1,7 @@
 package com.example.car_wash_el_catracho;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -18,7 +19,7 @@ public class Navegacion extends AppCompatActivity {
 
     ImageButton user;
 
-
+    int salir=0;
     TextView titulo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +44,24 @@ public class Navegacion extends AppCompatActivity {
         BottomNavigationView Navegacion = findViewById(R.id.bottomNavigationView);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_hostfragmet);
         NavigationUI.setupWithNavController(Navegacion,navHostFragment.getNavController());
+    }
+
+    public void onBackPressed() {
 
 
+        new AlertDialog.Builder(this)
+                .setMessage("¿Seguro que quieres salir de la aplicación?")
+                .setPositiveButton("Sí", (dialog, which) -> {
 
+                    finishAffinity();
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    if(salir==1){
+                        super.onBackPressed();
+                    }
+
+                })
+                .show();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.car_wash_el_catracho;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -11,6 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,20 +26,21 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 
-public class tipo_Lavado extends AppCompatActivity {
+public class tipo_Lavado extends AppCompatActivity{
     Button btnvol;
 
     ImageButton btngps;
 
-    Spinner lugar,hora;
+    Spinner lugar, hora;
 
-    TextView tipo,titul;
+    TextView tipo, titul;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tipo_lavado);
 
-        tipo=(TextView) findViewById(R.id.tvprecio);
+        tipo = (TextView) findViewById(R.id.tvprecio);
         titul = (TextView) findViewById(R.id.tituloL);
         lugar = (Spinner) findViewById(R.id.tipoL);
         hora = (Spinner) findViewById(R.id.HoraL);
@@ -44,16 +48,26 @@ public class tipo_Lavado extends AppCompatActivity {
 
         btngps.setVisibility(View.INVISIBLE);
 
-        ArrayAdapter<CharSequence> adp = ArrayAdapter.createFromResource(this,R.array.combo_opción, android.R.layout.simple_expandable_list_item_1);
+        ArrayAdapter<CharSequence> adp = ArrayAdapter.createFromResource(this, R.array.combo_opción, android.R.layout.simple_expandable_list_item_1);
         lugar.setAdapter(adp);
 
-        ArrayAdapter<CharSequence> adpH = ArrayAdapter.createFromResource(this,R.array.Hora, android.R.layout.simple_expandable_list_item_1);
+        String op = getIntent().getStringExtra("op");
+
+        if(op!=null) {
+            lugar.setSelection(Integer.parseInt(op));
+        }
+        else{
+            lugar.setSelection(0);
+        }
+        ArrayAdapter<CharSequence> adpH = ArrayAdapter.createFromResource(this, R.array.Hora, android.R.layout.simple_expandable_list_item_1);
         hora.setAdapter(adpH);
+
 
         String servicio = getIntent().getStringExtra("tipo");
 
 
-        if (servicio.equals("Completo")){
+
+        if (servicio.equals("Completo")) {
             titul.setText("Lavado Completo");
         } else if (servicio.equals("fuera")) {
             titul.setText("Lavado por fuera");
@@ -62,27 +76,25 @@ public class tipo_Lavado extends AppCompatActivity {
         lugar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (servicio.equals("fuera")){
-                    if(lugar.getSelectedItemId()==1) {
+                if (servicio.equals("fuera")) {
+                    if (lugar.getSelectedItemId() == 1) {
                         tipo.setText("Precio: L.100");
                         btngps.setVisibility(View.INVISIBLE);
-                    } else if (lugar.getSelectedItemId()==2) {
+                    } else if (lugar.getSelectedItemId() == 2) {
                         tipo.setText("Precio: L.150");
                         btngps.setVisibility(View.VISIBLE);
-                    }
-                    else{
+                    } else {
                         tipo.setText("");
                         btngps.setVisibility(View.INVISIBLE);
                     }
                 } else if (servicio.equals("Completo")) {
-                    if(lugar.getSelectedItemId()==1) {
+                    if (lugar.getSelectedItemId() == 1) {
                         btngps.setVisibility(View.INVISIBLE);
                         tipo.setText("Precio: L.150");
-                    } else if (lugar.getSelectedItemId()==2) {
+                    } else if (lugar.getSelectedItemId() == 2) {
                         btngps.setVisibility(View.VISIBLE);
                         tipo.setText("Precio: L.200");
-                    }
-                    else {
+                    } else {
                         btngps.setVisibility(View.INVISIBLE);
                         tipo.setText("");
                     }
@@ -95,12 +107,12 @@ public class tipo_Lavado extends AppCompatActivity {
             }
         });
 
-        btnvol =(Button) findViewById(R.id.btnAtras);
+        btnvol = (Button) findViewById(R.id.btnAtras);
 
         btnvol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),Navegacion.class);
+                Intent intent = new Intent(getApplicationContext(), Navegacion.class);
                 startActivity(intent);
             }
         });
@@ -108,8 +120,11 @@ public class tipo_Lavado extends AppCompatActivity {
         btngps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), mapa.class);
+                intent.putExtra("lavado",servicio);
+                intent.putExtra("opcion",""+lugar.getSelectedItemId());
+                startActivity(intent);
             }
         });
-
     }
 }

@@ -4,4 +4,13 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+    <color name="custom_selector_color">#030E78</color>
+
+    <style name="CustomCalendarView">
+        <item name="android:datePickerDialogTheme">@style/CustomCalendarDialog</item>
+    </style>
+
+    <style name="CustomCalendarDialog">
+        <item name="colorAccent">@color/custom_selector_color</item>
+    </style>
 </resources>

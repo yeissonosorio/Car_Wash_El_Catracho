@@ -3,16 +3,21 @@ package com.example.car_wash_el_catracho;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class Agregar_Auto extends AppCompatActivity {
 
     EditText marca,modelo,year,aceite;
+
+    Button agregar,atras;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +27,26 @@ public class Agregar_Auto extends AppCompatActivity {
         year=(EditText) findViewById(R.id.txtyea);
         aceite=(EditText) findViewById(R.id.txtaceite);
 
-        validar();
+        agregar = (Button) findViewById(R.id.btnagregar);
+        atras = (Button) findViewById(R.id.btnatraAgre);
+
+        agregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(validar()==true){
+                    Intent intent = new Intent(getApplicationContext(),Navegacion.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(),Navegacion.class);
+                    startActivity(intent);
+            }
+        });
 
         aceite.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
@@ -57,6 +81,7 @@ public class Agregar_Auto extends AppCompatActivity {
         else if (ace.isEmpty()) {
             aceite.setError("Debe llenar este campo");
         }
+        else
         {
             valor=true;
         }

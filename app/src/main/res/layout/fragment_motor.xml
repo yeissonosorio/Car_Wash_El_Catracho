@@ -57,6 +57,7 @@
             android:id="@+id/calendarioL"
             android:layout_width="385dp"
             android:layout_height="303dp"
+            android:theme="@style/CustomCalendarDialog"
             android:layout_marginTop="44dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

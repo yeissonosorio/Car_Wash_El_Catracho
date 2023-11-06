@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    int salir=1;
+    int salir=0;
 
     Button btnregis,btnentrar;
 
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 .setMessage("¿Seguro que quieres salir de la aplicación?")
                 .setPositiveButton("Sí", (dialog, which) -> {
 
-                    finish();
+                    finishAffinity();
                 })
                 .setNegativeButton("No", (dialog, which) -> {
                     if(salir==1){

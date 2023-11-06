@@ -89,19 +89,19 @@
       app:layout_constraintTop_toBottomOf="@+id/txtyea" />
 
   <Button
-      android:id="@+id/btncotizacion"
+      android:id="@+id/btnagregar"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="40dp"
       android:layout_marginTop="40dp"
       android:layout_marginEnd="40dp"
-      android:text="Enviar Cotización"
+      android:text="Agregar"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/txtaceite" />
 
   <Button
-      android:id="@+id/btnatrascot"
+      android:id="@+id/btnatraAgre"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="40dp"
@@ -110,6 +110,6 @@
       android:text="Atras"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/btncotizacion" />
+      app:layout_constraintTop_toBottomOf="@+id/btnagregar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

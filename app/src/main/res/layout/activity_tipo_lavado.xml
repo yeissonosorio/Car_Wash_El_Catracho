@@ -40,11 +40,12 @@
 
         <TextView
             android:id="@+id/tvprecio"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="sans-serif-condensed"
             android:text="Precio"
+            android:textAlignment="center"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.055"
@@ -59,10 +60,10 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.777"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/calendarioL"
-            app:layout_constraintVertical_bias="0.047" />
+            app:layout_constraintVertical_bias="0.03" />
 
         <Spinner
             android:id="@+id/tipoL"
@@ -81,9 +82,9 @@
             android:id="@+id/calendarioL"
             android:layout_width="385dp"
             android:layout_height="303dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.384"
+            android:theme="@style/CustomCalendarDialog"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
@@ -92,7 +93,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="104dp"
+            android:layout_marginTop="60dp"
             android:layout_marginEnd="20dp"
             android:text="Hacer Reservacion"
             app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +106,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
             android:text="Volver al Menu"
             app:layout_constraintEnd_toEndOf="parent"
@@ -118,27 +119,29 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="64dp"
             android:layout_marginEnd="20dp"
             android:fontFamily="sans-serif-condensed"
             android:text="Seleccionar fecha"
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.03"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tipoL" />
 
         <ImageButton
             android:id="@+id/btnubicacion"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#030E78"
-            app:layout_constraintBottom_toTopOf="@+id/btnReserva"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@+id/textView14"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.904"
-            app:layout_constraintStart_toEndOf="@+id/tvprecio"
-            app:layout_constraintTop_toBottomOf="@+id/HoraL"
-            app:layout_constraintVertical_bias="0.196"
+            app:layout_constraintHorizontal_bias="0.922"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tipoL"
+            app:layout_constraintVertical_bias="0.571"
             app:srcCompat="@drawable/baseline_add_location_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
