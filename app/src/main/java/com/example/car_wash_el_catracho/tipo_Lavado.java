@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,6 +29,8 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 
 public class tipo_Lavado extends AppCompatActivity{
     Button btnvol;
+
+    CalendarView calendario;
 
     ImageButton btngps;
 
@@ -45,6 +48,12 @@ public class tipo_Lavado extends AppCompatActivity{
         lugar = (Spinner) findViewById(R.id.tipoL);
         hora = (Spinner) findViewById(R.id.HoraL);
         btngps = (ImageButton) findViewById(R.id.btnubicacion);
+
+        calendario = (CalendarView) findViewById(R.id.calendarioL);
+
+        long currentDate = System.currentTimeMillis();
+
+        calendario.setMinDate(currentDate);
 
         btngps.setVisibility(View.INVISIBLE);
 
