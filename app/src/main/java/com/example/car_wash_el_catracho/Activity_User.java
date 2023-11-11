@@ -16,7 +16,7 @@ public class Activity_User extends AppCompatActivity {
         setContentView(R.layout.activity_user);
 
         cerrrar = (Button) findViewById(R.id.btncerrar);
-        atras = (Button) findViewById(R.id.btnAtrasC);
+        atras = (Button) findViewById(R.id.btnaAceptar);
 
         cerrrar.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -19,6 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Historial"
+            android:layout_marginTop="20dp"
             android:textAlignment="center"
             android:textSize="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -36,16 +37,18 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="700dp"
                 android:layout_marginTop="100dp"
                 android:orientation="vertical">
 
                 <ListView
                     android:id="@+id/Historial"
-                    android:fontFamily="sans-serif-black"
                     android:layout_width="match_parent"
-                    android:layout_height="387dp"
-                    android:choiceMode="singleChoice" />
+                    android:layout_height="500dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="9dp"
+                    android:choiceMode="singleChoice"
+                    android:fontFamily="sans-serif-black" />
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
