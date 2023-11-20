@@ -54,6 +54,8 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback, Googl
                     Intent intent = new Intent(getApplicationContext(),tipo_Lavado.class);
                     intent.putExtra("tipo",servicio);
                     intent.putExtra("op",posicion);
+                    intent.putExtra("l",latitud);
+                    intent.putExtra("ln",longitud);
                     startActivity(intent);
                 }
             }
@@ -65,7 +67,11 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback, Googl
         mMap = googleMap;
         this.mMap.setOnMapClickListener(this);
         this.mMap.setOnMapLongClickListener(this);
-        LatLng latLng = new LatLng(0,0);
+        double lat=Double.parseDouble(getIntent().getStringExtra("lat"));
+        double logt=Double.parseDouble(getIntent().getStringExtra("lon"));
+        latitud=(long) lat;
+        longitud=(long) logt;
+        LatLng latLng = new LatLng(lat,logt);
         mMap.addMarker(new MarkerOptions().position(latLng));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }

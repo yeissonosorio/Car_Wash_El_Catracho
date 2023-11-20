@@ -26,8 +26,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class tipo_Lavado extends AppCompatActivity{
+    private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1001;
+    private FusedLocationProviderClient fusedLocationClient;
+
+    String longi,lat,servicio,l,lon;
+
+
     Button btnvol;
 
     CalendarView calendario;
@@ -72,7 +80,7 @@ public class tipo_Lavado extends AppCompatActivity{
         hora.setAdapter(adpH);
 
 
-        String servicio = getIntent().getStringExtra("tipo");
+        servicio = getIntent().getStringExtra("tipo");
 
 
 
@@ -129,11 +137,70 @@ public class tipo_Lavado extends AppCompatActivity{
         btngps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), mapa.class);
-                intent.putExtra("lavado",servicio);
-                intent.putExtra("opcion",""+lugar.getSelectedItemId());
-                startActivity(intent);
+                if (!isLocationEnabled()) {
+                    Toast.makeText(getApplicationContext(), "La configuración de ubicación está desactivada, por favor actívala.", Toast.LENGTH_SHORT).show();
+                } else {
+                    fusedLocationClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+                    checkLocationPermission();
+
+                }
             }
         });
     }
+
+    private boolean isLocationEnabled() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    private void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
+        } else {
+
+            getLocation();
+        }
+    }
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PERMISSION_REQUEST_ACCESS_FINE_LOCATION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getLocation();
+            } else {
+
+            }
+        }
+    }
+
+    public void getLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+                            lat=""+latitude;
+                            longi=""+longitude;
+
+                            Toast.makeText(tipo_Lavado.this, "Abriendo Mapa",Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getApplicationContext(), mapa.class);
+                            intent.putExtra("lavado",servicio);
+                            intent.putExtra("lat",lat);
+                            intent.putExtra("lon",longi);
+                            intent.putExtra("opcion",""+lugar.getSelectedItemId());
+                            startActivity(intent);
+                        }
+                    }
+                });
+    }
+
 }
