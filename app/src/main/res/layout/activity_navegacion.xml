@@ -7,6 +7,7 @@
     android:background="@color/white"
     tools:context=".Navegacion">
 
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
@@ -27,8 +28,10 @@
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:navGraph="@navigation/my_nav" />
 
     <ImageButton
@@ -43,5 +46,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icono" />
+
+    <ImageButton
+        android:id="@+id/btnnoti"
+        android:layout_width="66dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="2dp"
+        android:backgroundTint="#FFFFFF"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_notifications_24" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/outnoti"
+        android:layout_width="11dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/redondo"
+        app:layout_constraintEnd_toStartOf="@+id/btnusuario"
+        app:layout_constraintHorizontal_bias="0.003"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

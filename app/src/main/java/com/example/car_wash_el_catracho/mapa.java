@@ -80,6 +80,7 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback, Googl
         mMap.addMarker(new MarkerOptions().position(newposition));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(newposition));
     }
+
     @Override
     public void onMapLongClick(@NonNull LatLng latLng) {
         latitud= (long) latLng.latitude;

@@ -3,6 +3,7 @@ package com.example.car_wash_el_catracho;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
@@ -17,9 +18,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Navegacion extends AppCompatActivity {
 
-    ImageButton user;
+    ImageButton user,botnoti;
 
     int salir=0;
+
+    ConstraintLayout outnoti;
     TextView titulo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,11 @@ public class Navegacion extends AppCompatActivity {
         setContentView(R.layout.activity_navegacion);
 
         user = (ImageButton) findViewById(R.id.btnusuario);
+        botnoti = (ImageButton) findViewById(R.id.btnnoti);
+        outnoti = (ConstraintLayout) findViewById(R.id.outnoti);
+
+        outnoti.setVisibility(View.VISIBLE);
+
 
         user.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +45,14 @@ public class Navegacion extends AppCompatActivity {
             }
         });
 
+        botnoti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Historial_Notificaciones.class);
+                intent.putExtra("valor","Crear");
+                startActivity(intent);
+            }
+        });
         boton();
     }
 
