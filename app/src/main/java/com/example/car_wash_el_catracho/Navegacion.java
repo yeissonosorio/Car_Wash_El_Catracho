@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -22,7 +23,7 @@ public class Navegacion extends AppCompatActivity {
 
     int salir=0;
 
-    ConstraintLayout outnoti;
+    ImageView outnoti;
     TextView titulo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class Navegacion extends AppCompatActivity {
 
         user = (ImageButton) findViewById(R.id.btnusuario);
         botnoti = (ImageButton) findViewById(R.id.btnnoti);
-        outnoti = (ConstraintLayout) findViewById(R.id.outnoti);
+        outnoti = (ImageView) findViewById(R.id.outnoti);
 
         outnoti.setVisibility(View.VISIBLE);
 

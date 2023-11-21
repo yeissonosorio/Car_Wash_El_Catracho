@@ -5,15 +5,33 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.car_wash_el_catracho.Config.ResapiMethod;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
     EditText password,email;
     TextView txtolvi;
+
+    ArrayList<String> listaD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +77,9 @@ public class MainActivity extends AppCompatActivity {
         btnentrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validar()==true) {
-                    if (email.getText().toString().equals("admin")) {
-                        Intent intent = new Intent(getApplicationContext(), Cotizacion.class);
-                        startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(getApplicationContext(), Navegacion.class);
-                        startActivity(intent);
+                    if (validar()!=false) {
+                        entrar();
                     }
-                }
             }
         });
 
@@ -99,6 +113,65 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
+    public  void entrar(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, ResapiMethod.GetClienteF+
+                "?correo="+email.getText()+"&pass="+password.getText(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Respuesta", response.toString());
+                try {
+                    Obtener(response);
+
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }, new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Respuesta", error.toString());
+                if (isNetworkAvailable(getApplicationContext())) {
+                    Toast.makeText(getApplicationContext(),"Correo o Contraeña no valido",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    private void Obtener(String response) throws JSONException {
+        JSONArray jsonArray = new JSONArray(response);
+
+        listaD = new ArrayList<>();
+
+        if(jsonArray.length()>0) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String id = jsonObject.getString("id");
+                listaD.add(id);
+            }
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"Correo o Contraeña no valido",Toast.LENGTH_LONG).show();
+        }
+
+        if(listaD.get(0).toString().equals("")){
+
+        }
+        else {
+            Intent intent = new Intent(getApplicationContext(),Navegacion.class);
+            startActivity(intent);
+        }
+
+    }
+
     private boolean validar() {
         boolean valor=false;
 
@@ -117,4 +190,16 @@ public class MainActivity extends AppCompatActivity {
         }
         return valor;
     }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+
+        return false;
+    }
+
 }
