@@ -13,9 +13,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
+
+
 public class Recuperar extends AppCompatActivity {
     Button btncorreo;
     EditText txtcorreo;
+
+    final String username ="carwashelcatracho@gamil.com";
+    final String password="Grupo51@";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +34,11 @@ public class Recuperar extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(validar()==true) {
-                    Intent intent = new Intent(getApplicationContext(), Verificacion.class);
-                    intent.putExtra("valor", "Recuperar");
-                    intent.putExtra("correo", txtcorreo.getText().toString());
-                    startActivity(intent);
+                    //Intent intent = new Intent(getApplicationContext(), Verificacion.class);
+                    //intent.putExtra("valor", "Recuperar");
+                    //intent.putExtra("correo", txtcorreo.getText().toString());
+                    //startActivity(intent);
+                    enviarmensaje();
                 }
             }
         });
@@ -46,6 +53,11 @@ public class Recuperar extends AppCompatActivity {
             return false;
         });
     }
+
+    private void enviarmensaje() {
+
+    }
+
 
     private boolean validar() {
         boolean valor=false;
