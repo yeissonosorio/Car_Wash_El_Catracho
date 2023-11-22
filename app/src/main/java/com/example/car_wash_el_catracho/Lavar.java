@@ -30,6 +30,7 @@ public class Lavar extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(),tipo_Lavado.class);
                 intent.putExtra("tipo","Completo");
+                intent.putExtra("ids","2");
                 startActivity(intent);
             }
         });
@@ -39,6 +40,7 @@ public class Lavar extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity().getApplicationContext(),tipo_Lavado.class);
                 intent.putExtra("tipo","fuera");
+                intent.putExtra("ids","1");
                 startActivity(intent);
             }
         });

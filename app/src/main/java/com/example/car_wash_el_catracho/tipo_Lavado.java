@@ -1,5 +1,7 @@
 package com.example.car_wash_el_catracho;
 
+import static com.example.car_wash_el_catracho.MainActivity.isNetworkAvailable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,12 +30,25 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.car_wash_el_catracho.Config.Lavado_UB;
+import com.example.car_wash_el_catracho.Config.ResapiMethod;
+import com.example.car_wash_el_catracho.Config.id;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class tipo_Lavado extends AppCompatActivity{
@@ -50,11 +66,13 @@ public class tipo_Lavado extends AppCompatActivity{
 
     ImageButton btngps;
 
-    String fecha;
+    String fecha,h;
 
     Spinner lugar, hora;
 
     TextView tipo, titul;
+    ArrayList<String> listaD;
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -175,13 +193,13 @@ public class tipo_Lavado extends AppCompatActivity{
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 fecha=String.format(year + "/" + (month + 1) + "/" + dayOfMonth);
-                years = year;            }
+                }
         });
 
         btnreseva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),fecha+"",Toast.LENGTH_LONG).show();
+                entrar();
             }
         });
     }
@@ -214,6 +232,57 @@ public class tipo_Lavado extends AppCompatActivity{
             }
         }
     }
+
+    public  void entrar(){
+        String ids=getIntent().getStringExtra("ids");
+        h=hora.getSelectedItem().toString();
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, ResapiMethod.Gettreservavalida+
+                "?servi="+ids+"&fecha="+fecha+"&hora="+h, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Respuesta", response.toString());
+                try {
+                    Obtener(response);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }, new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Respuesta", error.toString());
+                if (isNetworkAvailable(getApplicationContext())) {
+                    Toast.makeText(getApplicationContext(),"Correo o Contraeña no valido",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    private void Obtener(String response) throws JSONException {
+        JSONArray jsonArray = new JSONArray(response);
+        listaD = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            String can = jsonObject.getString("cantidad");
+            listaD.add(can);
+        }
+        int numero = Integer.parseInt(listaD.get(0).toString());
+        if(numero==4){
+            Toast.makeText(getApplicationContext(),"Reservaciones agotadas para este horario",Toast.LENGTH_LONG).show();
+        }
+        else {
+
+        }
+    }
+
 
     public void getLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

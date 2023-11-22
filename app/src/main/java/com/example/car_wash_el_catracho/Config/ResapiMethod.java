@@ -12,12 +12,14 @@ public class ResapiMethod {
 
     public static final String GettVerificar="CorreoRepetido.php";
 
-    public static final String Gettfoto="fotocliente.php";
+    public static final String Gettvalidar="VerificarReservacion.php";
 
     public static final String EndpoitpostCliente= "http://"+ipaddress+separador+restapi+separador+PostRouting;
 
     public static final String GetClienteF= "http://"+ipaddress+separador+restapi+separador+GettRouting;
 
     public static final String GetVerficacion= "http://"+ipaddress+separador+restapi+separador+GettVerificar;
-    public static final String Getfoto= "http://"+ipaddress+separador+restapi+separador+Gettfoto;
+
+
+    public static final String Gettreservavalida="http://"+ipaddress+separador+restapi+separador+Gettvalidar;
 }

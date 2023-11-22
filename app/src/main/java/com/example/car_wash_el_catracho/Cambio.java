@@ -22,7 +22,7 @@ public class Cambio extends Fragment {
         Spinner Hora;
         int years,mes,dia;
 
-        String fecha;
+        String fecha,h;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
