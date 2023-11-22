@@ -80,6 +80,17 @@ public class Agregar_Auto extends AppCompatActivity {
         }
         else if (ace.isEmpty()) {
             aceite.setError("Debe llenar este campo");
+        } else if (marca.length()>30) {
+          marca.setError("Solo se acepta 30 caracteres");
+        }
+        else if (modelo.length()>30) {
+            modelo.setError("Solo se acepta 30 caracteres");
+        }
+        else if (aceite.length()>30) {
+            aceite.setError("Solo se acepta 30 caracteres");
+        }
+        else if (year.length()>4) {
+            year.setError("Solo se acepta 4 caracteres");
         }
         else
         {

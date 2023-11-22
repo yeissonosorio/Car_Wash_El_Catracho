@@ -51,7 +51,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
         <CalendarView
-            android:id="@+id/calendarioL"
+            android:id="@+id/calendarioCam"
             android:layout_width="363dp"
             android:layout_height="296dp"
             android:layout_marginTop="12dp"
@@ -65,7 +65,7 @@
             android:id="@+id/btnReserva"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="20dp"
             android:text="Hacer Reservacion"
