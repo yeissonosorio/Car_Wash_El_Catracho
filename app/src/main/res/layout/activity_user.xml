@@ -7,10 +7,11 @@
     tools:context=".Activity_User">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imagenCliente"
         android:layout_width="149dp"
         android:layout_height="144dp"
         app:shapeAppearanceOverlay="@style/Imagen"
+        android:scaleType="centerCrop"
         android:layout_marginTop="68dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,28 +43,32 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/txtfechaHoraservi"
-        android:layout_width="wrap_content"
+        android:id="@+id/txtcorreocliente"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="32dp"
+        android:layout_marginEnd="10dp"
         android:fontFamily="sans-serif-condensed"
         android:text="Correo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtclienteN" />
+        app:layout_constraintTop_toBottomOf="@+id/txtnombrecliente" />
 
     <TextView
-        android:id="@+id/txtLugarservi"
-        android:layout_width="wrap_content"
+        android:id="@+id/txtPaisCliente"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="36dp"
+        android:layout_marginEnd="10dp"
         android:fontFamily="sans-serif-condensed"
         android:text="Pais"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.045"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtfechaHoraservi" />
+        app:layout_constraintTop_toBottomOf="@+id/txtcorreocliente" />
 
     <Button
         android:id="@+id/btnaAceptar"
@@ -76,19 +81,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtLugarservi" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPaisCliente" />
 
     <TextView
-        android:id="@+id/txtclienteN"
-        android:layout_width="wrap_content"
+        android:id="@+id/txtnombrecliente"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="32dp"
+        android:layout_marginEnd="10dp"
         android:fontFamily="sans-serif-condensed"
         android:text="Nombre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+        app:layout_constraintTop_toBottomOf="@+id/imagenCliente" />
 
     <Button
         android:id="@+id/btncerrar"

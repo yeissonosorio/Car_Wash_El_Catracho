@@ -13,7 +13,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.car_wash_el_catracho.Config.ResapiMethod;
+import com.example.car_wash_el_catracho.Config.id;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -148,27 +148,30 @@ public class MainActivity extends AppCompatActivity {
 
     private void Obtener(String response) throws JSONException {
         JSONArray jsonArray = new JSONArray(response);
-
         listaD = new ArrayList<>();
-
-        if(jsonArray.length()>0) {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 String id = jsonObject.getString("id");
+                String nombres= jsonObject.getString("nombre");
+                String apellidos =jsonObject.getString("apellido");
+                String correos= jsonObject.getString("correo");
+                String Pais =jsonObject.getString("pais");
+                String fot= jsonObject.getString("foto");
                 listaD.add(id);
+                listaD.add(nombres+" "+apellidos);
+                listaD.add(correos);
+                listaD.add(Pais);
+                listaD.add(fot);
             }
-        }
-        else{
-            Toast.makeText(getApplicationContext(),"Correo o Contraeña no valido",Toast.LENGTH_LONG).show();
-        }
 
-        if(listaD.get(0).toString().equals("")){
-
-        }
-        else {
+            id.setId(listaD.get(0).toString());
+            id.setNombre(listaD.get(1).toString());
+            id.setCorreo(listaD.get(2).toString());
+            id.setPais(listaD.get(3).toString());
+            id.setFoto(listaD.get(4).toString());
             Intent intent = new Intent(getApplicationContext(),Navegacion.class);
             startActivity(intent);
-        }
+
 
     }
 

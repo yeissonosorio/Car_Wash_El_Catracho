@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.car_wash_el_catracho.Config.Lavado_UB;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,7 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class mapa extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     private FusedLocationProviderClient fusedLocationClient;
-    long latitud, longitud;
+    double latitud, longitud;
 
     GoogleMap mMap;
 
@@ -44,6 +45,7 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback, Googl
         String servicio = getIntent().getStringExtra("lavado");
         String posicion = getIntent().getStringExtra("opcion");
 
+        Toast.makeText(getApplicationContext(),Lavado_UB.getHora()+"",Toast.LENGTH_LONG).show();
 
         btnEnviarcordenadas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,8 +56,8 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback, Googl
                     Intent intent = new Intent(getApplicationContext(),tipo_Lavado.class);
                     intent.putExtra("tipo",servicio);
                     intent.putExtra("op",posicion);
-                    intent.putExtra("l",latitud);
-                    intent.putExtra("ln",longitud);
+                    Lavado_UB.setLatitud(latitud+"");
+                    Lavado_UB.setLongitud(longitud+"");
                     startActivity(intent);
                 }
             }
@@ -69,8 +71,8 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback, Googl
         this.mMap.setOnMapLongClickListener(this);
         double lat=Double.parseDouble(getIntent().getStringExtra("lat"));
         double logt=Double.parseDouble(getIntent().getStringExtra("lon"));
-        latitud=(long) lat;
-        longitud=(long) logt;
+        latitud=(double) lat;
+        longitud=(double) logt;
         LatLng latLng = new LatLng(lat,logt);
         mMap.addMarker(new MarkerOptions().position(latLng));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -78,8 +80,8 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback, Googl
 
     @Override
     public void onMapClick(@NonNull LatLng latLng) {
-        latitud= (long) latLng.latitude;
-        longitud= (long) latLng.longitude;
+        latitud= (double) latLng.latitude;
+        longitud= (double) latLng.longitude;
 
         mMap.clear();
         LatLng newposition = new LatLng(latLng.latitude,latLng.longitude);
@@ -89,8 +91,8 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback, Googl
 
     @Override
     public void onMapLongClick(@NonNull LatLng latLng) {
-        latitud= (long) latLng.latitude;
-        longitud= (long) latLng.longitude;
+        latitud= (double) latLng.latitude;
+        longitud= (double) latLng.longitude;
 
         mMap.clear();
         LatLng newposition = new LatLng(latLng.latitude,latLng.longitude);

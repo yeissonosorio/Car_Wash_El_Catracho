@@ -1,6 +1,7 @@
 package com.example.car_wash_el_catracho;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -14,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,9 +27,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.car_wash_el_catracho.Config.Lavado_UB;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.time.LocalDate;
+import java.util.Locale;
 
 public class tipo_Lavado extends AppCompatActivity{
     private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1001;
@@ -36,18 +42,24 @@ public class tipo_Lavado extends AppCompatActivity{
     String longi,lat,servicio,l,lon;
 
 
-    Button btnvol;
+    Button btnvol,btnreseva;
 
     CalendarView calendario;
 
+    int years,mes,dia;
+
     ImageButton btngps;
+
+    String fecha;
 
     Spinner lugar, hora;
 
     TextView tipo, titul;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tipo_lavado);
 
@@ -56,7 +68,7 @@ public class tipo_Lavado extends AppCompatActivity{
         lugar = (Spinner) findViewById(R.id.tipoL);
         hora = (Spinner) findViewById(R.id.HoraL);
         btngps = (ImageButton) findViewById(R.id.btnubicacion);
-
+        btnreseva =(Button) findViewById(R.id.btnReserva);
         calendario = (CalendarView) findViewById(R.id.calendarioL);
 
         long currentDate = System.currentTimeMillis();
@@ -76,9 +88,15 @@ public class tipo_Lavado extends AppCompatActivity{
         else{
             lugar.setSelection(0);
         }
+
+
+        lat=Lavado_UB.getLatitud();
+        longi=Lavado_UB.getLongitud();
+
         ArrayAdapter<CharSequence> adpH = ArrayAdapter.createFromResource(this, R.array.Hora, android.R.layout.simple_expandable_list_item_1);
         hora.setAdapter(adpH);
 
+        hora.setSelection(Lavado_UB.getHora());
 
         servicio = getIntent().getStringExtra("tipo");
 
@@ -146,6 +164,26 @@ public class tipo_Lavado extends AppCompatActivity{
                 }
             }
         });
+
+        LocalDate fech = LocalDate.now();
+        years = fech.getYear();
+        mes = fech.getMonthValue();
+        dia = fech.getDayOfMonth();
+        fecha=String.format(years + "/" + (mes) + "/" + dia);
+
+        calendario.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                fecha=String.format(year + "/" + (month + 1) + "/" + dayOfMonth);
+                years = year;            }
+        });
+
+        btnreseva.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),fecha+"",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private boolean isLocationEnabled() {
@@ -188,16 +226,28 @@ public class tipo_Lavado extends AppCompatActivity{
                         if (location != null) {
                             double latitude = location.getLatitude();
                             double longitude = location.getLongitude();
-                            lat=""+latitude;
-                            longi=""+longitude;
 
-                            Toast.makeText(tipo_Lavado.this, "Abriendo Mapa",Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(), mapa.class);
-                            intent.putExtra("lavado",servicio);
-                            intent.putExtra("lat",lat);
-                            intent.putExtra("lon",longi);
-                            intent.putExtra("opcion",""+lugar.getSelectedItemId());
-                            startActivity(intent);
+                            if(Lavado_UB.getLatitud()==null) {
+                                lat=""+latitude;
+                                longi=""+longitude;
+                                Toast.makeText(tipo_Lavado.this, "Abriendo Mapa", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(getApplicationContext(), mapa.class);
+                                intent.putExtra("lavado", servicio);
+                                intent.putExtra("lat", lat);
+                                intent.putExtra("lon", longi);
+                                intent.putExtra("opcion", "" + lugar.getSelectedItemId());
+                                startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(tipo_Lavado.this, "Abriendo Mapa", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(getApplicationContext(), mapa.class);
+                                intent.putExtra("lavado", servicio);
+                                intent.putExtra("lat", lat);
+                                intent.putExtra("lon", longi);
+                                intent.putExtra("opcion", "" + lugar.getSelectedItemId());
+                                startActivity(intent);
+                            }
+                            Lavado_UB.setHora(hora.getSelectedItemPosition());
                         }
                     }
                 });

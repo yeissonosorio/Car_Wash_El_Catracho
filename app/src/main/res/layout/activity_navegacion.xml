@@ -33,23 +33,10 @@
         app:navGraph="@navigation/my_nav" />
 
     <ImageButton
-        android:id="@+id/btnusuario"
-        android:layout_width="66dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="2dp"
-        android:backgroundTint="#FFFFFF"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.953"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icono" />
-
-    <ImageButton
         android:id="@+id/btnnoti"
         android:layout_width="57dp"
         android:layout_height="57dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:backgroundTint="#FFFFFF"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,5 +55,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnnoti"
         app:srcCompat="@drawable/redondo" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/btnusuario"
+        android:layout_width="57dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="15dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.938"
+        app:layout_constraintStart_toEndOf="@+id/btnnoti"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/Imagen"
+        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

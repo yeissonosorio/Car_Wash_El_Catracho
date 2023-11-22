@@ -13,9 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
-
-
 public class Recuperar extends AppCompatActivity {
     Button btncorreo;
     EditText txtcorreo;
@@ -55,7 +52,6 @@ public class Recuperar extends AppCompatActivity {
     }
 
     private void enviarmensaje() {
-
     }
 
 

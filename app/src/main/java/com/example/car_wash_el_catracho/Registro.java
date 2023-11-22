@@ -1,5 +1,7 @@
 package com.example.car_wash_el_catracho;
 
+import static com.example.car_wash_el_catracho.MainActivity.isNetworkAvailable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -19,6 +21,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -36,17 +39,21 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.car_wash_el_catracho.Config.Clientes;
 import com.example.car_wash_el_catracho.Config.ResapiMethod;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class Registro extends AppCompatActivity {
 
@@ -59,6 +66,8 @@ public class Registro extends AppCompatActivity {
 
     Button crear;
 
+    String idv="";
+
     ImageButton imagen;
 
     Spinner pais;
@@ -67,7 +76,10 @@ public class Registro extends AppCompatActivity {
 
     Bitmap image;
 
-    String imagenconver;
+    String imagenconver="";
+
+
+    ArrayList<String> listaD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +104,9 @@ public class Registro extends AppCompatActivity {
         crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(veri()==true) {
-                    SendData();
+                    validar(correo.getText().toString());
                 }
             }
         });
@@ -258,6 +271,11 @@ public class Registro extends AppCompatActivity {
     private boolean veri() {
         boolean valor=false;
 
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         String nom= nombre.getText().toString().replaceAll("\\s","");
         String apell =apellido.getText().toString().replaceAll("\\s","");
         String cor = correo.getText().toString().replaceAll("\\s","");
@@ -282,6 +300,22 @@ public class Registro extends AppCompatActivity {
         }
         else if (pais.getSelectedItemId()==0){
             Toast.makeText(getApplicationContext(),"Selccione un país",Toast.LENGTH_LONG).show();
+        }  else if (imagenconver.isEmpty()) {
+            Toast.makeText(getApplicationContext(),"Selccione una imagen",Toast.LENGTH_LONG).show();
+        } else if (nombre.length()>15) {
+            nombre.setError("El nombre no debe se mayor a 15 caracters");
+        }
+        else if (apellido.length()>15) {
+            apellido.setError("El Apellido no debe se mayor a 15 caracters");
+        }
+        else if (correo.length()>50) {
+            correo.setError("El correo no debe se mayor a 50 caracters");
+        }
+        else if (contra.length()<10) {
+            contra.setError("La contraseña debe llevar al menos 10 caracters");
+        }
+        else if (contra.length()>30) {
+            nombre.setError("La contraseña no debe se mayor a 30 caracters");
         }
         else {
             if(cont.equals(vercont)) {
@@ -292,5 +326,56 @@ public class Registro extends AppCompatActivity {
         }
         return valor;
     }
-    
+
+    public void validar(String correo){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, ResapiMethod.GetVerficacion+"?correo="+correo, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Respuesta", response.toString());
+                try {
+                    Obtener(response);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }, new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Respuesta", error.toString());
+                if (isNetworkAvailable(getApplicationContext())) {
+                    SendData();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    private void Obtener(String response) throws JSONException {
+        JSONArray jsonArray = new JSONArray(response);
+
+        listaD = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            String id = jsonObject.getString("id");
+            listaD.add(id);
+        }
+
+
+
+        if(listaD.get(0).toString().equals("")){
+
+        }
+        else {
+            correo.setError("Este correo ya existe");
+        }
+
+    }
+
 }
