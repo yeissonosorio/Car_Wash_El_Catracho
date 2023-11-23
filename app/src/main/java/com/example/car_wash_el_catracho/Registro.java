@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -318,11 +319,17 @@ public class Registro extends AppCompatActivity {
             nombre.setError("La contraseña no debe se mayor a 30 caracters");
         }
         else {
-            if(cont.equals(vercont)) {
-                valor = true;
-            }else {
-                vericontra.setError("La contraseña no coincide");
+            if (!correo.getText().toString().isEmpty() && Patterns.EMAIL_ADDRESS.matcher(correo.getText().toString()).matches()) {
+                if(cont.equals(vercont)) {
+                    valor = true;
+                }else {
+                    vericontra.setError("La contraseña no coincide");
+                }
             }
+            else {
+                correo.setError("No es un correo");
+            }
+
         }
         return valor;
     }

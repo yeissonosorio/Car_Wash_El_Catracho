@@ -13,8 +13,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class Agregar_Auto extends AppCompatActivity {
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.car_wash_el_catracho.Config.Autos;
+import com.example.car_wash_el_catracho.Config.Clientes;
+import com.example.car_wash_el_catracho.Config.ResapiMethod;
+import com.example.car_wash_el_catracho.Config.id;
 
+import org.json.JSONObject;
+
+public class Agregar_Auto extends AppCompatActivity {
+    private RequestQueue requestQueue;
     EditText marca,modelo,year,aceite;
 
     Button agregar,atras;
@@ -34,8 +47,7 @@ public class Agregar_Auto extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(validar()==true){
-                    Intent intent = new Intent(getApplicationContext(),Navegacion.class);
-                    startActivity(intent);
+                    SendData();
                 }
             }
         });
@@ -50,7 +62,6 @@ public class Agregar_Auto extends AppCompatActivity {
 
         aceite.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
-                // Oculta el teclado
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 return true;
@@ -97,5 +108,49 @@ public class Agregar_Auto extends AppCompatActivity {
             valor=true;
         }
         return valor;
+    }
+
+    private void SendData() {
+        requestQueue = Volley.newRequestQueue(this);
+        Autos auto = new Autos();
+        auto.setId(id.getId());
+        auto.setMarca(marca.getText().toString());
+        auto.setModelo(modelo.getText().toString());
+        auto.setYear(year.getText().toString());
+        auto.setAcite(aceite.getText().toString());
+
+        JSONObject jsonAuto = new JSONObject();
+
+        try {
+            jsonAuto.put("marca", auto.getMarca());
+            jsonAuto.put("modelo", auto.getModelo());
+            jsonAuto.put("year", auto.getYear());
+            jsonAuto.put("aceite", auto.getAcite());
+            jsonAuto.put("id_cliente", auto.getId());
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, ResapiMethod.EndpoitpostAuto, jsonAuto, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Toast.makeText(getApplicationContext(), "Auto Registrado", Toast.LENGTH_LONG).show();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Falllo",Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.getMessage().toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+        requestQueue.add(request);
+
+        Intent intent = new Intent(getApplicationContext(),Navegacion.class);
+        startActivity(intent);
     }
 }
