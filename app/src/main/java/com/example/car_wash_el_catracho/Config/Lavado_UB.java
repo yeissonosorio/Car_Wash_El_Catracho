@@ -5,6 +5,10 @@ public class Lavado_UB {
     private static String Longitud;
     private static int servi;
 
+    private static int precio;
+
+    private static int servicio;
+
     private static int year;
     private static int Mont;
 
@@ -66,5 +70,21 @@ public class Lavado_UB {
 
     public static void setHora(int hora) {
         Lavado_UB.hora = hora;
+    }
+
+    public static int getPrecio() {
+        return precio;
+    }
+
+    public static void setPrecio(int precio) {
+        Lavado_UB.precio = precio;
+    }
+
+    public static int getServicio() {
+        return servicio;
+    }
+
+    public static void setServicio(int servicio) {
+        Lavado_UB.servicio = servicio;
     }
 }

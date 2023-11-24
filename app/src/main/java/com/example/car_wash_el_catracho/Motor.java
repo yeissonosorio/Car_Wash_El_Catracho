@@ -2,6 +2,7 @@ package com.example.car_wash_el_catracho;
 
 import static com.example.car_wash_el_catracho.MainActivity.isNetworkAvailable;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -23,9 +24,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.car_wash_el_catracho.Config.Lavado_UB;
 import com.example.car_wash_el_catracho.Config.ResapiMethod;
+import com.example.car_wash_el_catracho.Config.Servicios;
+import com.example.car_wash_el_catracho.Config.id;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,14 +73,18 @@ public class Motor extends Fragment {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 fecha = String.format(year + "/" + (month + 1) + "/" + dayOfMonth);
-                Toast.makeText(root.getContext(),fecha+"",Toast.LENGTH_LONG).show();
             }
         });
 
         rerva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                entrar(root);
+                if(Hora.getSelectedItemId()!=0){
+                    entrar(root);
+                }else {
+                    Toast.makeText(root.getContext(),"Seleccione una hora",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
 
@@ -105,7 +114,7 @@ public class Motor extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 Log.d("Respuesta", error.toString());
                 if (isNetworkAvailable(root.getContext())) {
-                    Toast.makeText(root.getContext(),"Correo o Contraeña no valido",Toast.LENGTH_LONG).show();
+
                 } else {
                     Toast.makeText(root.getContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
                 }
@@ -125,11 +134,59 @@ public class Motor extends Fragment {
             listaD.add(can);
         }
         int numero = Integer.parseInt(listaD.get(0).toString());
-        if(numero==4){
+        if(numero>=4){
             Toast.makeText(root.getContext(),"Reservaciones agotadas para este horario",Toast.LENGTH_LONG).show();
         }
         else {
-            Toast.makeText(root.getContext(),numero+"",Toast.LENGTH_LONG).show();
+            SendData(root);
         }
+    }
+    private void SendData(View root) {
+        RequestQueue requestQueue;
+        h=Hora.getSelectedItem().toString();
+        requestQueue = Volley.newRequestQueue(root.getContext());
+        Servicios servi = new Servicios();
+        servi.setId_servicio("4");
+        servi.setId_cliente(id.getId());
+        servi.setFecha(fecha);
+        servi.setHora(h);
+        servi.setLatitud("0");
+        servi.setLongitud("0");
+        servi.setTotal("400");
+
+        JSONObject jsonservi = new JSONObject();
+
+        try {
+            jsonservi.put("id_cliente", servi.getId_cliente());
+            jsonservi.put("id_servicio",servi.getId_servicio() );
+            jsonservi.put("fecha",servi.getFecha() );
+            jsonservi.put("hora", servi.getHora());
+            jsonservi.put("latitud", servi.getLatitud());
+            jsonservi.put("longitud", servi.getLatitud());
+            jsonservi.put("total",servi.getTotal());
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, ResapiMethod.EndpoitServcio, jsonservi, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Toast.makeText(root.getContext(), "Reservación exitosa", Toast.LENGTH_LONG).show();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    Toast.makeText(root.getContext(),"Falllo",Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(root.getContext(), error.getMessage().toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+        requestQueue.add(request);
+
+        Hora.setSelection(0);
     }
 }

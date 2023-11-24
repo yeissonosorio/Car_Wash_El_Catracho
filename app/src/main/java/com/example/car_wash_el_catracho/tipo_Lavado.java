@@ -34,10 +34,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.car_wash_el_catracho.Config.Autos;
 import com.example.car_wash_el_catracho.Config.Lavado_UB;
 import com.example.car_wash_el_catracho.Config.ResapiMethod;
+import com.example.car_wash_el_catracho.Config.Servicios;
 import com.example.car_wash_el_catracho.Config.id;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -52,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class tipo_Lavado extends AppCompatActivity{
+
     private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1001;
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -130,21 +134,33 @@ public class tipo_Lavado extends AppCompatActivity{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (servicio.equals("fuera")) {
+                    Lavado_UB.setServi(1);
                     if (lugar.getSelectedItemId() == 1) {
+                        lat="0";
+                        lon="0";
+                        Lavado_UB.setPrecio(100);
                         tipo.setText("Precio: L.100");
                         btngps.setVisibility(View.INVISIBLE);
                     } else if (lugar.getSelectedItemId() == 2) {
                         tipo.setText("Precio: L.150");
+                        Lavado_UB.setPrecio(150);
+                        Lavado_UB.setServi(1);
                         btngps.setVisibility(View.VISIBLE);
                     } else {
                         tipo.setText("");
                         btngps.setVisibility(View.INVISIBLE);
                     }
                 } else if (servicio.equals("Completo")) {
+                    Lavado_UB.setServi(2);
                     if (lugar.getSelectedItemId() == 1) {
+                        lat="0";
+                        lon="0";
+                        Lavado_UB.setPrecio(150);
                         btngps.setVisibility(View.INVISIBLE);
                         tipo.setText("Precio: L.150");
                     } else if (lugar.getSelectedItemId() == 2) {
+                        Lavado_UB.setServi(2);
+                        Lavado_UB.setPrecio(200);
                         btngps.setVisibility(View.VISIBLE);
                         tipo.setText("Precio: L.200");
                     } else {
@@ -199,7 +215,16 @@ public class tipo_Lavado extends AppCompatActivity{
         btnreseva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                entrar();
+                if(lugar.getSelectedItemId()!=0){
+                    if(hora.getSelectedItemId()!=0){
+                        entrar();
+                    }else {
+                        Toast.makeText(getApplicationContext(),"Seleccione una hora",Toast.LENGTH_LONG).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Seleccione donde se realizara el servicio",Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -275,11 +300,11 @@ public class tipo_Lavado extends AppCompatActivity{
             listaD.add(can);
         }
         int numero = Integer.parseInt(listaD.get(0).toString());
-        if(numero==4){
+        if(numero>=4){
             Toast.makeText(getApplicationContext(),"Reservaciones agotadas para este horario",Toast.LENGTH_LONG).show();
         }
         else {
-
+            SendData();
         }
     }
 
@@ -320,6 +345,56 @@ public class tipo_Lavado extends AppCompatActivity{
                         }
                     }
                 });
+    }
+
+    private void SendData() {
+        RequestQueue requestQueue;
+        h=hora.getSelectedItem().toString();
+        requestQueue = Volley.newRequestQueue(this);
+        Servicios servi = new Servicios();
+        servi.setId_servicio(Lavado_UB.getServi()+"");
+        servi.setId_cliente(id.getId());
+        servi.setFecha(fecha);
+        servi.setHora(h);
+        servi.setLatitud(lat);
+        servi.setLongitud(lon);
+        servi.setTotal(Lavado_UB.getPrecio()+"");
+
+        JSONObject jsonservi = new JSONObject();
+
+        try {
+            jsonservi.put("id_cliente", servi.getId_cliente());
+            jsonservi.put("id_servicio",servi.getId_servicio() );
+            jsonservi.put("fecha",servi.getFecha() );
+            jsonservi.put("hora", servi.getHora());
+            jsonservi.put("latitud", servi.getLatitud());
+            jsonservi.put("longitud", servi.getLatitud());
+            jsonservi.put("total",servi.getTotal());
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, ResapiMethod.EndpoitServcio, jsonservi, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Toast.makeText(getApplicationContext(), "Auto Registrado", Toast.LENGTH_LONG).show();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    Toast.makeText(getApplicationContext(),"Falllo",Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.getMessage().toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+        requestQueue.add(request);
+
+        Intent intent = new Intent(getApplicationContext(),Navegacion.class);
+        startActivity(intent);
     }
 
 }

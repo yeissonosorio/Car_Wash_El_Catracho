@@ -16,6 +16,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.car_wash_el_catracho.Config.ResapiMethod;
+import com.example.car_wash_el_catracho.Config.id;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,8 +30,6 @@ public class historial extends Fragment {
     private RequestQueue requestQueue;
 
     private ArrayAdapter<String> posadapter;
-
-    private  String url="https://jsonplaceholder.typicode.com/posts";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,14 +45,17 @@ public class historial extends Fragment {
 
         requestQueue = Volley.newRequestQueue(getActivity());
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, ResapiMethod.GettHistorialF+"?id_cliente="+ id.getId(), null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 for(int i=0; i<response.length(); i++ ){
                     try {
                         JSONObject jsonObjectRequest = response.getJSONObject(i);
-                        String mensaje = jsonObjectRequest.getString("title");
-                        posadapter.add(mensaje);
+                        String Servicio = jsonObjectRequest.getString("servicio");
+                        String fecha = jsonObjectRequest.getString("fecha");
+                        String hora = jsonObjectRequest.getString("hora");
+                        String total = jsonObjectRequest.getString("total");
+                        posadapter.add("Servicio: "+Servicio+"\nFecha: "+fecha+" "+hora);
 
                     }catch (Exception e){
                         e.printStackTrace();
