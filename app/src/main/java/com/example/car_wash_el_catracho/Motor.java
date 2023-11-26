@@ -30,6 +30,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.car_wash_el_catracho.Config.Lavado_UB;
 import com.example.car_wash_el_catracho.Config.ResapiMethod;
 import com.example.car_wash_el_catracho.Config.Servicios;
+import com.example.car_wash_el_catracho.Config.horaser;
 import com.example.car_wash_el_catracho.Config.id;
 
 import org.json.JSONArray;
@@ -37,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Motor extends Fragment {
@@ -73,6 +75,9 @@ public class Motor extends Fragment {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 fecha = String.format(year + "/" + (month + 1) + "/" + dayOfMonth);
+                years=year;
+                mes=(month+1);
+                dia=dayOfMonth;
             }
         });
 
@@ -125,7 +130,8 @@ public class Motor extends Fragment {
         requestQueue.add(jsonObjectRequest);
     }
 
-    private void Obtener(String response,View root) throws JSONException {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void Obtener(String response, View root) throws JSONException {
         JSONArray jsonArray = new JSONArray(response);
         listaD = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -138,7 +144,17 @@ public class Motor extends Fragment {
             Toast.makeText(root.getContext(),"Reservaciones agotadas para este horario",Toast.LENGTH_LONG).show();
         }
         else {
-            SendData(root);
+            LocalDateTime fechaHoraActual = LocalDateTime.now();
+            horaser OB = new horaser();
+            int n= OB.hora((int) Hora.getSelectedItemId());
+            LocalDateTime fechaHoraComparacion = LocalDateTime.of(years, mes, dia,n, 0);
+
+            if (fechaHoraActual.isBefore(fechaHoraComparacion)) {
+                SendData(root);
+            } else {
+                Toast.makeText(root.getContext(),"Ya paso la hora de reservación",Toast.LENGTH_LONG).show();
+            }
+
         }
     }
     private void SendData(View root) {

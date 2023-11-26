@@ -31,56 +31,59 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/Servicio"
-        android:layout_width="0dp"
+        android:id="@+id/tvs4"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="100dp"
         android:fontFamily="sans-serif-condensed"
         android:text="Servicio"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fue" />
 
     <TextView
-        android:id="@+id/txtfechaHoraservi"
-        android:layout_width="0dp"
+        android:id="@+id/tvs2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="36dp"
         android:fontFamily="sans-serif-condensed"
-        android:text="Fecha y Hora de la Reservación"
+        android:text="Fecha y Hora "
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtclienteN" />
+        app:layout_constraintTop_toBottomOf="@+id/tvs3" />
 
     <TextView
-        android:id="@+id/txtLugarservi"
-        android:layout_width="0dp"
+        android:id="@+id/tvies1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="48dp"
         android:fontFamily="sans-serif-condensed"
-        android:text="Ubicación"
+        android:text="Lugar"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.134"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtfechaHoraservi" />
+        app:layout_constraintTop_toBottomOf="@+id/tvs2" />
 
     <TextView
-        android:id="@+id/txtxprecioServi"
-        android:layout_width="0dp"
+        android:id="@+id/txview"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="36dp"
         android:fontFamily="sans-serif-condensed"
         android:text="Precio del servicio"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtLugarservi" />
+        app:layout_constraintTop_toBottomOf="@+id/tvies1" />
 
     <Button
         android:id="@+id/btnRegreser"
@@ -91,19 +94,96 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtxprecioServi" />
+        app:layout_constraintTop_toBottomOf="@+id/txview" />
 
     <TextView
-        android:id="@+id/txtclienteN"
-        android:layout_width="0dp"
+        android:id="@+id/tvs3"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="sans-serif-condensed"
         android:text="Nombre del cliente"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.063"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Servicio" />
+        app:layout_constraintTop_toBottomOf="@+id/tvs4" />
+
+    <TextView
+        android:id="@+id/FechaT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="44dp"
+        android:text="TextView"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.59"
+        app:layout_constraintStart_toEndOf="@+id/tvs2"
+        app:layout_constraintTop_toBottomOf="@+id/NombreT" />
+
+    <TextView
+        android:id="@+id/NombreT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="TextView"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.563"
+        app:layout_constraintStart_toEndOf="@+id/tvs3"
+        app:layout_constraintTop_toBottomOf="@+id/txtservicT" />
+
+    <TextView
+        android:id="@+id/txtservicT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="TextView"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.663"
+        app:layout_constraintStart_toEndOf="@+id/tvs4"
+        app:layout_constraintTop_toBottomOf="@+id/fue" />
+
+    <TextView
+        android:id="@+id/LugarT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.685"
+        app:layout_constraintStart_toEndOf="@+id/tvies1"
+        app:layout_constraintTop_toBottomOf="@+id/FechaT" />
+
+    <TextView
+        android:id="@+id/PrecioT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="TextView"
+        android:fontFamily="sans-serif-condensed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.56"
+        app:layout_constraintStart_toEndOf="@+id/txview"
+        app:layout_constraintTop_toBottomOf="@+id/LugarT" />
+
+    <Button
+        android:id="@+id/Btnubi"
+        android:layout_width="159dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="40dp"
+        android:text="mi Ubicacion"
+        app:layout_constraintBottom_toTopOf="@+id/PrecioT"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tvies1"
+        app:layout_constraintTop_toBottomOf="@+id/FechaT"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

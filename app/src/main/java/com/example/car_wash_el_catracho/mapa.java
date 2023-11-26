@@ -30,7 +30,9 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback, Googl
 
     GoogleMap mMap;
 
-    Button btnEnviarcordenadas;
+    double lat,logt;
+
+    Button btnEnviarcordenadas,btnAtras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,18 +43,16 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback, Googl
         mapFragment.getMapAsync(this);
 
         btnEnviarcordenadas = (Button) findViewById(R.id.btnEnviarcordenadas);
-
+        btnAtras=(Button)findViewById(R.id.btnAtrasCORDE);
         String servicio = getIntent().getStringExtra("lavado");
         String posicion = getIntent().getStringExtra("opcion");
-
-        Toast.makeText(getApplicationContext(),Lavado_UB.getHora()+"",Toast.LENGTH_LONG).show();
-
         btnEnviarcordenadas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (longitud == 0&&latitud==0) {
                     Toast.makeText(getApplicationContext(), "Precione su Ubicacion", Toast.LENGTH_LONG).show();
                 } else {
+                    finish();
                     Intent intent = new Intent(getApplicationContext(),tipo_Lavado.class);
                     intent.putExtra("tipo",servicio);
                     intent.putExtra("op",posicion);
@@ -62,6 +62,17 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback, Googl
                 }
             }
         });
+        btnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),tipo_Lavado.class);
+                intent.putExtra("tipo",servicio);
+                intent.putExtra("op",posicion);
+                Lavado_UB.setLatitud(lat+"");
+                Lavado_UB.setLongitud(logt+"");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -69,8 +80,8 @@ public class mapa extends AppCompatActivity implements OnMapReadyCallback, Googl
         mMap = googleMap;
         this.mMap.setOnMapClickListener(this);
         this.mMap.setOnMapLongClickListener(this);
-        double lat=Double.parseDouble(getIntent().getStringExtra("lat"));
-        double logt=Double.parseDouble(getIntent().getStringExtra("lon"));
+        lat=Double.parseDouble(getIntent().getStringExtra("lat"));
+        logt=Double.parseDouble(getIntent().getStringExtra("lon"));
         latitud=(double) lat;
         longitud=(double) logt;
         LatLng latLng = new LatLng(lat,logt);

@@ -30,30 +30,17 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/CotidN"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
-        android:fontFamily="sans-serif-condensed"
-        android:text="ID cotización"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fue" />
-
-    <TextView
         android:id="@+id/txtfechaCotN"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="28dp"
         android:fontFamily="sans-serif-condensed"
         android:text="Fecha Hora"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CotidN" />
+        app:layout_constraintTop_toBottomOf="@+id/fue" />
 
     <TextView
         android:id="@+id/txtMarcacotN"
@@ -121,7 +108,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtaceiteN" />
 
     <Button
-        android:id="@+id/btnaAceptar"
+        android:id="@+id/btnaAceptarC"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -134,7 +121,7 @@
         app:layout_constraintTop_toBottomOf="@+id/PrecioN" />
 
     <Button
-        android:id="@+id/btnaRechazar"
+        android:id="@+id/btnaRechazarC"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -144,6 +131,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnaAceptar" />
+        app:layout_constraintTop_toBottomOf="@+id/btnaAceptarC" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

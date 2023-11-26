@@ -1,5 +1,8 @@
 package com.example.car_wash_el_catracho;
 
+import static com.example.car_wash_el_catracho.MainActivity.isNetworkAvailable;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.fragment.NavHostFragment;
@@ -8,6 +11,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -24,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.car_wash_el_catracho.Config.ResapiMethod;
+import com.example.car_wash_el_catracho.Config.horaser;
 import com.example.car_wash_el_catracho.Config.id;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -31,11 +36,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Navegacion extends AppCompatActivity {
 
     int salir=0;
+    ArrayList<String> listaD;
     ImageView outnoti,user,botnoti;
 
     @Override
@@ -45,7 +52,7 @@ public class Navegacion extends AppCompatActivity {
         user = (ImageView) findViewById(R.id.btnusuario);
         botnoti = (ImageView) findViewById(R.id.btnnoti);
         outnoti = (ImageView) findViewById(R.id.outnoti);
-
+        outnoti.setVisibility(View.INVISIBLE);
         outnoti.setVisibility(View.VISIBLE);
         user.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +71,7 @@ public class Navegacion extends AppCompatActivity {
             }
         });
         boton();
+        entrar();
         revelar();
     }
 
@@ -95,5 +103,56 @@ public class Navegacion extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         user.setImageBitmap(bitmap);
         return bitmap;
+    }
+
+    public  void entrar(){
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, ResapiMethod.GettNotiNumeor+"?id="+id.getId(), new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onResponse(String response) {
+                Log.d("Respuesta", response.toString());
+                try {
+                    Obtener(response);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        }, new Response.ErrorListener(){
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Respuesta", error.toString());
+                if (isNetworkAvailable(getApplicationContext())) {
+                } else {
+                    Toast.makeText(getApplicationContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void Obtener(String response) throws JSONException {
+        JSONArray jsonArray = new JSONArray(response);
+        listaD = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            String can = jsonObject.getString("numero");
+            listaD.add(can);
+        }
+        int numero = Integer.parseInt(listaD.get(0).toString());
+        if(numero>0){
+            botnoti.setVisibility(View.VISIBLE);
+            outnoti.setVisibility(View.VISIBLE);
+        }
+        else {
+            botnoti.setVisibility(View.INVISIBLE);
+            outnoti.setVisibility(View.INVISIBLE);
+        }
     }
 }

@@ -2,13 +2,61 @@ package com.example.car_wash_el_catracho;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.example.car_wash_el_catracho.Config.id;
 
 public class Dato_Historial extends AppCompatActivity {
 
+    TextView servi,correo,fecha,lugar,precio;
+
+    Button Regresar,btnubi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dato_historial);
+        servi=(TextView) findViewById(R.id.txtservicT);
+        correo=(TextView) findViewById(R.id.NombreT);
+        fecha=(TextView) findViewById(R.id.FechaT);
+        lugar=(TextView) findViewById(R.id.LugarT);
+        precio=(TextView) findViewById(R.id.PrecioT);
+
+        Regresar=(Button) findViewById(R.id.btnRegreser);
+        btnubi=(Button)findViewById(R.id.Btnubi);
+        btnubi.setVisibility(View.INVISIBLE);
+        lugar.setVisibility(View.INVISIBLE);
+
+        servi.setText(getIntent().getStringExtra("servis"));
+        correo.setText(id.getCorreo());
+        fecha.setText(getIntent().getStringExtra("fecha")+" "+getIntent().getStringExtra("h"));
+        if(getIntent().getStringExtra("lat").equals("0")) {
+            lugar.setVisibility(View.VISIBLE);
+            lugar.setText("Agencia de car wash");
+        }
+        else {
+            btnubi.setVisibility(View.VISIBLE);
+        }
+        precio.setText("L."+getIntent().getStringExtra("precio"));
+
+        Regresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),Navegacion.class);
+                startActivity(intent);
+            }
+        });
+
+        btnubi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 }

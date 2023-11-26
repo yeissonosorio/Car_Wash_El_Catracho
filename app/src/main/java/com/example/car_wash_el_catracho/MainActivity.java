@@ -163,14 +163,18 @@ public class MainActivity extends AppCompatActivity {
                 listaD.add(Pais);
                 listaD.add(fot);
             }
-
-            id.setId(listaD.get(0).toString());
-            id.setNombre(listaD.get(1).toString());
-            id.setCorreo(listaD.get(2).toString());
-            id.setPais(listaD.get(3).toString());
-            id.setFoto(listaD.get(4).toString());
-            Intent intent = new Intent(getApplicationContext(),Navegacion.class);
-            startActivity(intent);
+            if(listaD.get(2).toString().equals("AdminCarwash@gmail.com")){
+                Intent intent = new Intent(getApplicationContext(),Cotizacion.class);
+                startActivity(intent);
+            }else {
+                id.setId(listaD.get(0).toString());
+                id.setNombre(listaD.get(1).toString());
+                id.setCorreo(listaD.get(2).toString());
+                id.setPais(listaD.get(3).toString());
+                id.setFoto(listaD.get(4).toString());
+                Intent intent = new Intent(getApplicationContext(), Navegacion.class);
+                startActivity(intent);
+            }
 
 
     }

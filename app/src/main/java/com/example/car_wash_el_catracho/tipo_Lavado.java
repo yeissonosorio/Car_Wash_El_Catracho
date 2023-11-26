@@ -4,6 +4,7 @@ import static com.example.car_wash_el_catracho.MainActivity.isNetworkAvailable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -41,6 +42,7 @@ import com.example.car_wash_el_catracho.Config.Autos;
 import com.example.car_wash_el_catracho.Config.Lavado_UB;
 import com.example.car_wash_el_catracho.Config.ResapiMethod;
 import com.example.car_wash_el_catracho.Config.Servicios;
+import com.example.car_wash_el_catracho.Config.horaser;
 import com.example.car_wash_el_catracho.Config.id;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -51,6 +53,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -76,6 +79,8 @@ public class tipo_Lavado extends AppCompatActivity{
 
     TextView tipo, titul;
     ArrayList<String> listaD;
+
+    int salir=0;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -209,6 +214,9 @@ public class tipo_Lavado extends AppCompatActivity{
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 fecha=String.format(year + "/" + (month + 1) + "/" + dayOfMonth);
+                    years=year;
+                    mes=(month+1);
+                    dia=dayOfMonth;
                 }
         });
 
@@ -264,6 +272,7 @@ public class tipo_Lavado extends AppCompatActivity{
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, ResapiMethod.Gettreservavalida+
                 "?servi="+ids+"&fecha="+fecha+"&hora="+h, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(String response) {
                 Log.d("Respuesta", response.toString());
@@ -280,7 +289,7 @@ public class tipo_Lavado extends AppCompatActivity{
             public void onErrorResponse(VolleyError error) {
                 Log.d("Respuesta", error.toString());
                 if (isNetworkAvailable(getApplicationContext())) {
-                    Toast.makeText(getApplicationContext(),"Correo o Contraeña no valido",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Vuelva intentar mas tarde",Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
                 }
@@ -291,6 +300,7 @@ public class tipo_Lavado extends AppCompatActivity{
         requestQueue.add(jsonObjectRequest);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void Obtener(String response) throws JSONException {
         JSONArray jsonArray = new JSONArray(response);
         listaD = new ArrayList<>();
@@ -304,7 +314,17 @@ public class tipo_Lavado extends AppCompatActivity{
             Toast.makeText(getApplicationContext(),"Reservaciones agotadas para este horario",Toast.LENGTH_LONG).show();
         }
         else {
-            SendData();
+            LocalDateTime fechaHoraActual = LocalDateTime.now();
+            horaser OB = new horaser();
+            int n= OB.hora((int) hora.getSelectedItemId());
+            LocalDateTime fechaHoraComparacion = LocalDateTime.of(years, mes, dia,n, 0);
+
+            if (fechaHoraActual.isBefore(fechaHoraComparacion)) {
+                SendData();
+            } else {
+                Toast.makeText(getApplicationContext(),"Ya paso la hora de reservación",Toast.LENGTH_LONG).show();
+            }
+
         }
     }
 
@@ -379,7 +399,7 @@ public class tipo_Lavado extends AppCompatActivity{
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    Toast.makeText(getApplicationContext(), "Auto Registrado", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Reservación Guardada", Toast.LENGTH_LONG).show();
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     Toast.makeText(getApplicationContext(),"Falllo",Toast.LENGTH_LONG).show();
@@ -397,4 +417,13 @@ public class tipo_Lavado extends AppCompatActivity{
         startActivity(intent);
     }
 
+    public void onBackPressed() {
+        if(salir==1){
+            super.onBackPressed();
+        }else{
+            finish();
+         Intent intent = new Intent(getApplicationContext(),Navegacion.class);
+         startActivity(intent);
+        }
+    }
 }
