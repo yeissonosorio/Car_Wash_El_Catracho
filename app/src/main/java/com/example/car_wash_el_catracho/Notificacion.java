@@ -123,8 +123,8 @@ public class Notificacion extends AppCompatActivity {
             marca.setText("Marca de auto: "+marcad);
             modelo.setText("Modelo de auto: "+modelos);
             year.setText("año del auto: "+anio);
-            precio.setText("Precio del servicio: "+precioa);
-            aceite.setText("Aceite del auto: L."+aceit);
+            precio.setText("Precio del servicio: L."+precioa);
+            aceite.setText("Aceite del auto: "+aceit);
         }
     }
 
