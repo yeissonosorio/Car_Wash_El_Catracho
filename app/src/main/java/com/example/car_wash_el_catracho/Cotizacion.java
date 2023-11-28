@@ -133,10 +133,20 @@ public class Cotizacion extends AppCompatActivity {
         listaD = new ArrayList<String>();
 
         for (int i = 0 ; i<dato.size();i++){
-            listaD.add("id: "+dato.get(i).getId()+" Correo: "+dato.get(i).getCorreo()+"\nfecha y hora de reserva: "+dato.get(i).getFecha()+" "+dato.get(i).getHora());
+            listaD.add("id: "+dato.get(i).getId()+" Correo: "+dato.get(i).getCorreo()+"\nfecha y hora de reserva: "+date(dato.get(i).getFecha())+" "+dato.get(i).getHora());
         }
     }
 
+    public String date(String fechaEnFormatoYMD){
+        String[] partesFecha = fechaEnFormatoYMD.split("-");
+        // Obtener año, mes y día por separado
+        String ani = partesFecha[0];
+        String ms = partesFecha[1];
+        String dia = partesFecha[2];
+        String newfech= dia+"/"+ms+"/"+ani;
+
+        return newfech;
+    }
 
 
 

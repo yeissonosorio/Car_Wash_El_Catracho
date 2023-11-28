@@ -26,6 +26,7 @@ import com.example.car_wash_el_catracho.Config.id;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -103,7 +104,19 @@ public class historial extends Fragment {
     private void FillList() {
 
         for (int i = 0 ; i<his.size();i++){
-            posadapter.add("Servicio: "+his.get(i).getServicio()+"\nFecha: "+his.get(i).getFecha()+" "+his.get(i).getHora());
+
+            posadapter.add("Servicio: "+his.get(i).getServicio()+"\nFecha: "+date(his.get(i).getFecha())+" "+his.get(i).getHora());
         }
+    }
+
+    public String date(String fechaEnFormatoYMD){
+        String[] partesFecha = fechaEnFormatoYMD.split("-");
+        // Obtener año, mes y día por separado
+        String ani = partesFecha[0];
+        String ms = partesFecha[1];
+        String dia = partesFecha[2];
+        String newfech= dia+"/"+ms+"/"+ani;
+
+        return newfech;
     }
 }

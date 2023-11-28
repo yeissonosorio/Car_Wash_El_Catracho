@@ -37,7 +37,7 @@ public class Notificacion extends AppCompatActivity {
 
     TextView fecha,marca,modelo,year,precio,aceite;
     private RequestQueue requestQueue;
-
+    int salir=0;
     Button acp,rez;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +119,7 @@ public class Notificacion extends AppCompatActivity {
             hours=hora;
             clien=cliente;
             tot=precioa;
-            fecha.setText("Fecha y hora de reserva: "+fechah+" "+hora);
+            fecha.setText("Fecha y hora de reserva: "+date(fechah)+" "+hora);
             marca.setText("Marca de auto: "+marcad);
             modelo.setText("Modelo de auto: "+modelos);
             year.setText("año del auto: "+anio);
@@ -141,7 +141,7 @@ public class Notificacion extends AppCompatActivity {
             ex.printStackTrace();
         }
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, ResapiMethod.PutendpointNOti, jsonActualizar, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, ResapiMethod.PutendpointNOti, jsonActualizar, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -214,6 +214,24 @@ public class Notificacion extends AppCompatActivity {
 
     }
 
+    public String date(String fechaEnFormatoYMD){
+        String[] partesFecha = fechaEnFormatoYMD.split("-");
+        // Obtener año, mes y día por separado
+        String ani = partesFecha[0];
+        String ms = partesFecha[1];
+        String dia = partesFecha[2];
+        String newfech= dia+"/"+ms+"/"+ani;
 
+        return newfech;
+    }
+    public void onBackPressed() {
+        if(salir==1){
+            super.onBackPressed();
+        }else{
+            finish();
+            Intent intent = new Intent(getApplicationContext(), Historial_Notificaciones.class);
+            startActivity(intent);
+        }
+    }
 
 }

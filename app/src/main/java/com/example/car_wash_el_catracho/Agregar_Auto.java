@@ -127,6 +127,7 @@ public class Agregar_Auto extends AppCompatActivity {
             jsonAuto.put("year", auto.getYear());
             jsonAuto.put("aceite", auto.getAcite());
             jsonAuto.put("id_cliente", auto.getId());
+            jsonAuto.put("estado","0");
 
         } catch (Exception ex) {
             ex.printStackTrace();

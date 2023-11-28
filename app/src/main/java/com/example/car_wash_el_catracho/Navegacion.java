@@ -53,7 +53,7 @@ public class Navegacion extends AppCompatActivity {
         botnoti = (ImageView) findViewById(R.id.btnnoti);
         outnoti = (ImageView) findViewById(R.id.outnoti);
         outnoti.setVisibility(View.INVISIBLE);
-        outnoti.setVisibility(View.VISIBLE);
+        outnoti.setVisibility(View.INVISIBLE);
         user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

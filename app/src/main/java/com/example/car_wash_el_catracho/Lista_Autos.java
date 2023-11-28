@@ -44,6 +44,7 @@ public class Lista_Autos extends AppCompatActivity {
 
     String idA;
 
+    int salir=0;
     int toque=0;
 
     @Override
@@ -152,10 +153,22 @@ public class Lista_Autos extends AppCompatActivity {
     public  void Delete(String id){
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, ResapiMethod.DeltAutocliente+"?id="+id, null, new Response.Listener<JSONObject>() {
+
+        JSONObject jsonActualizar= new JSONObject();
+
+        try {
+            jsonActualizar.put("id",id);
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, ResapiMethod.DeltAutocliente, jsonActualizar, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 String mensaje = null;
+
                 try {
                     mensaje = response.getString("eliminado");
                 } catch (JSONException e) {
@@ -171,5 +184,15 @@ public class Lista_Autos extends AppCompatActivity {
         });
         requestQueue.add(jsonObjectRequest);
         combo();
+        startActivity(getIntent());
+    }
+    public void onBackPressed() {
+        if(salir==1){
+            super.onBackPressed();
+        }else{
+            finish();
+            Intent intent = new Intent(getApplicationContext(),Navegacion.class);
+            startActivity(intent);
+        }
     }
 }

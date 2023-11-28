@@ -142,7 +142,7 @@ public class tipo_Lavado extends AppCompatActivity{
                     Lavado_UB.setServi(1);
                     if (lugar.getSelectedItemId() == 1) {
                         lat="0";
-                        lon="0";
+                        longi="0";
                         Lavado_UB.setPrecio(100);
                         tipo.setText("Precio: L.100");
                         btngps.setVisibility(View.INVISIBLE);
@@ -159,7 +159,7 @@ public class tipo_Lavado extends AppCompatActivity{
                     Lavado_UB.setServi(2);
                     if (lugar.getSelectedItemId() == 1) {
                         lat="0";
-                        lon="0";
+                        longi="0";
                         Lavado_UB.setPrecio(150);
                         btngps.setVisibility(View.INVISIBLE);
                         tipo.setText("Precio: L.150");
@@ -186,6 +186,8 @@ public class tipo_Lavado extends AppCompatActivity{
         btnvol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Lavado_UB.setLongitud(null);
+                Lavado_UB.setLatitud(null);
                 Intent intent = new Intent(getApplicationContext(), Navegacion.class);
                 startActivity(intent);
             }
@@ -377,7 +379,7 @@ public class tipo_Lavado extends AppCompatActivity{
         servi.setFecha(fecha);
         servi.setHora(h);
         servi.setLatitud(lat);
-        servi.setLongitud(lon);
+        servi.setLongitud(longi);
         servi.setTotal(Lavado_UB.getPrecio()+"");
 
         JSONObject jsonservi = new JSONObject();
@@ -388,7 +390,7 @@ public class tipo_Lavado extends AppCompatActivity{
             jsonservi.put("fecha",servi.getFecha() );
             jsonservi.put("hora", servi.getHora());
             jsonservi.put("latitud", servi.getLatitud());
-            jsonservi.put("longitud", servi.getLatitud());
+            jsonservi.put("longitud", servi.getLongitud());
             jsonservi.put("total",servi.getTotal());
 
         } catch (Exception ex) {
@@ -423,7 +425,10 @@ public class tipo_Lavado extends AppCompatActivity{
         }else{
             finish();
          Intent intent = new Intent(getApplicationContext(),Navegacion.class);
+         Lavado_UB.setLongitud(null);
+         Lavado_UB.setLatitud(null);
          startActivity(intent);
         }
     }
+
 }

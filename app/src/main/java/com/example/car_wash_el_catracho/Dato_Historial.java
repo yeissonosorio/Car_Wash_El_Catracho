@@ -16,6 +16,7 @@ public class Dato_Historial extends AppCompatActivity {
     TextView servi,correo,fecha,lugar,precio;
 
     Button Regresar,btnubi;
+    int salir=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +34,7 @@ public class Dato_Historial extends AppCompatActivity {
 
         servi.setText(getIntent().getStringExtra("servis"));
         correo.setText(id.getCorreo());
-        fecha.setText(getIntent().getStringExtra("fecha")+" "+getIntent().getStringExtra("h"));
+        fecha.setText(date(getIntent().getStringExtra("fecha"))+" "+getIntent().getStringExtra("h"));
         if(getIntent().getStringExtra("lat").equals("0")) {
             lugar.setVisibility(View.VISIBLE);
             lugar.setText("Agencia de car wash");
@@ -54,9 +55,31 @@ public class Dato_Historial extends AppCompatActivity {
         btnubi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent= new Intent(getApplicationContext(), MapaUBI.class);
+                intent.putExtra("lati",getIntent().getStringExtra("lat"));
+                intent.putExtra("loni",getIntent().getStringExtra("lon"));
+                startActivity(intent);
             }
         });
 
+    }
+    public String date(String fechaEnFormatoYMD){
+        String[] partesFecha = fechaEnFormatoYMD.split("-");
+        // Obtener año, mes y día por separado
+        String ani = partesFecha[0];
+        String ms = partesFecha[1];
+        String dia = partesFecha[2];
+        String newfech= dia+"/"+ms+"/"+ani;
+
+        return newfech;
+    }
+    public void onBackPressed() {
+        if(salir==1){
+            super.onBackPressed();
+        }else{
+            finish();
+            Intent intent = new Intent(getApplicationContext(),Navegacion.class);
+            startActivity(intent);
+        }
     }
 }

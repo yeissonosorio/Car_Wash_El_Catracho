@@ -68,7 +68,7 @@ public class Informe_admin_cot extends AppCompatActivity {
 
         idcot.setText("Id de cotización: "+id);
         correo.setText("Correo: "+correoD);
-        fecha.setText("Fecha y hora de Reserva: "+fechad+" "+horad);
+        fecha.setText("Fecha y hora de Reserva: "+date(fechad)+" "+horad);
         marca.setText("Marca: "+marcad);
         Modelo.setText("Modelo: "+modelod);
         Auto.setText("Año: "+anio);
@@ -107,17 +107,13 @@ public class Informe_admin_cot extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        JSONObject jsonActualizar= new JSONObject();
-
         try {
-            jsonActualizar.put("id",id);
-
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, ResapiMethod.PutendpointCotizacion, jsonActualizar, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, ResapiMethod.PutendpointCotizacion+"?id="+id, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -184,6 +180,16 @@ public class Informe_admin_cot extends AppCompatActivity {
         requestQueue.add(request);
 
 
+    }
+    public String date(String fechaEnFormatoYMD){
+        String[] partesFecha = fechaEnFormatoYMD.split("-");
+        // Obtener año, mes y día por separado
+        String ani = partesFecha[0];
+        String ms = partesFecha[1];
+        String dia = partesFecha[2];
+        String newfech= dia+"/"+ms+"/"+ani;
+
+        return newfech;
     }
 
     public void onBackPressed() {

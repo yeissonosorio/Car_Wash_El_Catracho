@@ -36,6 +36,8 @@ public class Historial_Notificaciones extends AppCompatActivity {
     Button botonatras;
     ListView lista;
 
+    int salir=0;
+
     ArrayList<Notificacions> noti;
 
     ArrayList<String> listaD;
@@ -119,8 +121,27 @@ public class Historial_Notificaciones extends AppCompatActivity {
         listaD = new ArrayList<String>();
 
         for (int i = 0 ; i<noti.size();i++){
-            listaD.add("ervicio: Cambio de aceite\nAuto:     "+noti.get(i).getMarca()+" "+noti.get(i).getModelo()+"\n" +
-                    "Fecha y hora de reserva: "+noti.get(i).getFecha()+" "+noti.get(i).getHora());
+            listaD.add("Servicio: Cambio de aceite\nAuto:     "+noti.get(i).getMarca()+" "+noti.get(i).getModelo()+"\n" +
+                    "Fecha y hora de reserva: "+date(noti.get(i).getFecha())+" "+noti.get(i).getHora());
+        }
+    }
+    public String date(String fechaEnFormatoYMD){
+        String[] partesFecha = fechaEnFormatoYMD.split("-");
+        // Obtener año, mes y día por separado
+        String ani = partesFecha[0];
+        String ms = partesFecha[1];
+        String dia = partesFecha[2];
+        String newfech= dia+"/"+ms+"/"+ani;
+
+        return newfech;
+    }
+    public void onBackPressed() {
+        if(salir==1){
+            super.onBackPressed();
+        }else{
+            finish();
+            Intent intent = new Intent(getApplicationContext(),Navegacion.class);
+            startActivity(intent);
         }
     }
 }
