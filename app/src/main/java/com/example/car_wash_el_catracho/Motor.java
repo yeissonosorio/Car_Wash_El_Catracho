@@ -43,6 +43,7 @@ import java.util.ArrayList;
 
 public class Motor extends Fragment {
 
+    //variables a usar
     CalendarView calendarView;
     Spinner Hora;
 
@@ -61,16 +62,17 @@ public class Motor extends Fragment {
         Hora = (Spinner) root.findViewById(R.id.HoraM);
         calendarView=(CalendarView) root.findViewById(R.id.calendarioL);
         rerva=(Button)root.findViewById(R.id.btnReservaM);
-
+        //obtiene hora
         ArrayAdapter<CharSequence> adp = ArrayAdapter.createFromResource(getActivity().getApplicationContext(),R.array.Hora, android.R.layout.simple_dropdown_item_1line);
         Hora.setAdapter(adp);
-
+        //obtener obtiene la fehca actual
         LocalDate fech = LocalDate.now();
         years = fech.getYear();
         mes = fech.getMonthValue();
         dia = fech.getDayOfMonth();
         fecha=String.format(years + "/" + (mes) + "/" + dia);
 
+        //obtiene la fecha de calendario
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -84,7 +86,9 @@ public class Motor extends Fragment {
         rerva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //verificar la fecha y hora
                 if(Hora.getSelectedItemId()!=0){
+                    //verifica cuantas reservas hay en los registros
                     entrar(root);
                 }else {
                     Toast.makeText(root.getContext(),"Seleccione una hora",Toast.LENGTH_LONG).show();
@@ -99,8 +103,10 @@ public class Motor extends Fragment {
     }
 
     public  void entrar(View root){
+        //obtiene la hora
         h=Hora.getSelectedItem().toString();
         RequestQueue requestQueue = Volley.newRequestQueue(root.getContext());
+
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, ResapiMethod.Gettreservavalida+
                 "?servi="+4+"&fecha="+fecha+"&hora="+h, new Response.Listener<String>() {
             @Override

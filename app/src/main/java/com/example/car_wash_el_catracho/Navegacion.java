@@ -40,7 +40,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Navegacion extends AppCompatActivity {
-
+    //variables
     int salir=0;
     ArrayList<String> listaD;
     ImageView outnoti,user,botnoti;
@@ -54,6 +54,8 @@ public class Navegacion extends AppCompatActivity {
         outnoti = (ImageView) findViewById(R.id.outnoti);
         outnoti.setVisibility(View.INVISIBLE);
         outnoti.setVisibility(View.INVISIBLE);
+
+        //los lleva a la acividad con la informacion de los usarios
         user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +64,7 @@ public class Navegacion extends AppCompatActivity {
             }
         });
 
+        //los lleva al historial de notificaciones
         botnoti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,18 +73,21 @@ public class Navegacion extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //se usas para desplazar los fragments
         boton();
+        //se usa para verificar si hay notificCIONES
         entrar();
+        //Muestar la imagen del usuario
         revelar();
     }
 
     private void boton() {
-
+        //Utilizamoes este codigo para hacer que nuestro activity al precionar los botones de navegacion valla caviando los framents
         BottomNavigationView Navegacion = findViewById(R.id.bottomNavigationView);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_hostfragmet);
         NavigationUI.setupWithNavController(Navegacion,navHostFragment.getNavController());
     }
-
+    //funcion que si sepreciona el boton de atras hace que se cierre la app
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setMessage("¿Seguro que quieres salir de la aplicación?")
@@ -99,6 +105,7 @@ public class Navegacion extends AppCompatActivity {
     }
 
     public Bitmap revelar(){
+        //convierte la imagen del usario Bitmap
         byte[] bytes = Base64.decode(id.getFoto(), Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         user.setImageBitmap(bitmap);

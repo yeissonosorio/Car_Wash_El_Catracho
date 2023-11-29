@@ -3,7 +3,7 @@ package com.example.car_wash_el_catracho.Config;
 public class ResapiMethod {
 
     public static final String separador="/";
-    public static final String ipaddress="192.168.0.7";
+    public static final String ipaddress="52.15.58.102";
     public static final String restapi="cw";
 
     public static final String PostRouting="CrearCliente.php";

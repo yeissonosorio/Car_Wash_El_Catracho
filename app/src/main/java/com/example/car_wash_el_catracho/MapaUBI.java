@@ -36,9 +36,7 @@ public class MapaUBI extends AppCompatActivity implements OnMapReadyCallback {
         sal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                Intent intent = new Intent(getApplicationContext(),Dato_Historial.class);
-                startActivity(intent);
+                onBackPressed();
             }
         });
 
@@ -54,12 +52,6 @@ public class MapaUBI extends AppCompatActivity implements OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
     public void onBackPressed() {
-        if(salir==1){
             super.onBackPressed();
-        }else{
-            finish();
-            Intent intent = new Intent(getApplicationContext(),Dato_Historial.class);
-            startActivity(intent);
-        }
     }
 }

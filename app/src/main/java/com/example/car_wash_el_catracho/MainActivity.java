@@ -3,8 +3,11 @@ package com.example.car_wash_el_catracho;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -37,6 +40,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     int salir=0;
+
+    private SharedPreferences sharedPreferences;
 
     Button btnregis,btnentrar;
 
@@ -172,6 +177,14 @@ public class MainActivity extends AppCompatActivity {
                 id.setCorreo(listaD.get(2).toString());
                 id.setPais(listaD.get(3).toString());
                 id.setFoto(listaD.get(4).toString());
+                sharedPreferences = getSharedPreferences("Usuario",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("id",id.getId());
+                editor.putString("nombre",id.getNombre());
+                editor.putString("correo",id.getCorreo());
+                editor.putString("pais",id.getPais());
+                editor.putString("foto",id.getFoto());
+                editor.apply();
                 Intent intent = new Intent(getApplicationContext(), Navegacion.class);
                 startActivity(intent);
             }

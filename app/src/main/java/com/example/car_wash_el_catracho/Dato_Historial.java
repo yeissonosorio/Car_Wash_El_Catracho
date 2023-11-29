@@ -58,6 +58,8 @@ public class Dato_Historial extends AppCompatActivity {
                 Intent intent= new Intent(getApplicationContext(), MapaUBI.class);
                 intent.putExtra("lati",getIntent().getStringExtra("lat"));
                 intent.putExtra("loni",getIntent().getStringExtra("lon"));
+                intent.putExtra("fe",getIntent().getStringExtra("fecha"));
+                intent.putExtra("ho",getIntent().getStringExtra("hora"));
                 startActivity(intent);
             }
         });
@@ -77,7 +79,6 @@ public class Dato_Historial extends AppCompatActivity {
         if(salir==1){
             super.onBackPressed();
         }else{
-            finish();
             Intent intent = new Intent(getApplicationContext(),Navegacion.class);
             startActivity(intent);
         }

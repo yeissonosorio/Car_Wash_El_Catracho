@@ -3,6 +3,7 @@ package com.example.car_wash_el_catracho;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ public class Activity_User extends AppCompatActivity {
     ImageView imagen;
     TextView Nombre,correo,pais;
     Button cerrrar,atras;
+    private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +39,14 @@ public class Activity_User extends AppCompatActivity {
         cerrrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sharedPreferences = getSharedPreferences("Usuario",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("id","");
+                editor.putString("nombre","");
+                editor.putString("correo","");
+                editor.putString("pais","");
+                editor.putString("foto","");
+                editor.apply();
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
             }
