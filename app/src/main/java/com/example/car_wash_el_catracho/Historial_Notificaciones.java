@@ -5,6 +5,7 @@ import static com.example.car_wash_el_catracho.MainActivity.isNetworkAvailable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +41,8 @@ public class Historial_Notificaciones extends AppCompatActivity {
 
     ArrayList<Notificacions> noti;
 
+    private SharedPreferences sharedPreferences;
+
     ArrayList<String> listaD;
 
     @Override
@@ -60,9 +63,10 @@ public class Historial_Notificaciones extends AppCompatActivity {
     }
 
     public  void Lista() {
-        String ID = id.getId();
+        sharedPreferences = getSharedPreferences("Usuario", MODE_PRIVATE);
+        String idu=sharedPreferences.getString("id","");
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, ResapiMethod.GettNOTFINAL +"?estado=0&id_cliente="+ID, new Response.Listener<String>() {
+        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, ResapiMethod.GettNOTFINAL +"?estado=0&id_cliente="+idu, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Respuesta", response.toString());

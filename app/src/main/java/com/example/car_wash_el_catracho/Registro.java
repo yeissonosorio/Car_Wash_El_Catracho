@@ -44,7 +44,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.car_wash_el_catracho.Config.Clientes;
 import com.example.car_wash_el_catracho.Config.ResapiMethod;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,6 +75,8 @@ public class Registro extends AppCompatActivity {
     String idv="";
 
     ImageButton imagen;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
 
     Spinner pais;
 
@@ -106,11 +113,53 @@ public class Registro extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(veri()==true) {
-                    validar(correo.getText().toString());
+            }
+        });
+
+        crear.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (veri() == true) {
+                    //método que intenta crear un nuevo usuario en Firebase Authentication
+                    mAuth.createUserWithEmailAndPassword(correo.getText().toString(), contra.getText().toString())
+                            .addOnCompleteListener(Registro.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        //El usuario se crea
+                                        FirebaseUser user = mAuth.getCurrentUser();
+
+                                        // Envío del correo de verificación
+                                        if (user != null) {
+                                            user.sendEmailVerification()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+
+                                                                validar(correo.getText().toString());
+
+                                                            } else {
+                                                                // Error al enviar el correo de verificación
+                                                                Toast.makeText(getApplicationContext(), "Error al enviar el correo de verificación", Toast.LENGTH_SHORT).show();
+                                                                Log.e("SendEmailError", task.getException().getMessage());
+                                                            }
+                                                        }
+                                                    });
+                                        }
+                                        // Puedes realizar acciones adicionales aquí después de la creación del usuario
+                                    } else {
+                                        // La creación del usuario falló, maneja el error aquí
+                                        Toast.makeText(getApplicationContext(), "La creación del usuario falló.", Toast.LENGTH_SHORT).show();
+                                        Log.e("CreateUserError", task.getException().getMessage());
+                                    }
+                                }
+                            });
                 }
             }
         });
+
 
         vericontra.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {

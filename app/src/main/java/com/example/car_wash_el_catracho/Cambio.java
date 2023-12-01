@@ -214,7 +214,11 @@ public class Cambio extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(root.getContext(), error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                if (isNetworkAvailable(root.getContext())) {
+                    Toast.makeText(root.getContext(),"Envio fallido",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(root.getContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         requestQueue.add(request);

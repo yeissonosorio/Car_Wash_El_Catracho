@@ -108,13 +108,11 @@ public class Notificacion extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("Respuesta", error.toString());
-                //veririficar que halla internet
                 if (isNetworkAvailable(getApplicationContext())) {
+                    Toast.makeText(getApplicationContext(),"Envio fallido",Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
         requestQueue.add(jsonObjectRequest);

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "53117077257",
+    "project_id": "car-wash-el-catracho",
+    "storage_bucket": "car-wash-el-catracho.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53117077257:android:8dc107cf1b40a2d4dfb5d8",
+        "android_client_info": {
+          "package_name": "com.example.car_wash_el_catracho"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGjoTlB4Z08CcAzqhNsO2joHSa1F_vgP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 package com.example.car_wash_el_catracho;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,6 +30,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.car_wash_el_catracho.Config.ResapiMethod;
 import com.example.car_wash_el_catracho.Config.id;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     int salir=0;
 
     private SharedPreferences sharedPreferences;
+
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     Button btnregis,btnentrar;
 
@@ -82,9 +90,29 @@ public class MainActivity extends AppCompatActivity {
         btnentrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if (validar()!=false) {
-                        entrar();
-                    }
+                if (validar()!=false) {
+                    mAuth.signInWithEmailAndPassword(email.getText().toString(),password.getText().toString())
+                            .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        //Inicia sesion
+                                        FirebaseUser user = mAuth.getCurrentUser();
+
+                                        if (user != null && user.isEmailVerified()) {
+                                            entrar();
+                                        } else {
+                                            // El correo electrónico no está verificado
+                                            Toast.makeText(MainActivity.this, "Por favor, verifica tu correo electrónico", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        // El inicio de sesión falló, manejar el error aquí
+                                        Toast.makeText(MainActivity.this, "Inicio de sesión fallido", Toast.LENGTH_SHORT).show();
+                                        Log.e("LoginError", task.getException().getMessage());
+                                    }
+                                }
+                            });
+                }
             }
         });
 
@@ -169,6 +197,10 @@ public class MainActivity extends AppCompatActivity {
                 listaD.add(fot);
             }
             if(listaD.get(2).toString().equals("AdminCarwash@gmail.com")){
+                sharedPreferences = getSharedPreferences("Usuario",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("id","1");
+                editor.apply();
                 Intent intent = new Intent(getApplicationContext(),Cotizacion.class);
                 startActivity(intent);
             }else {

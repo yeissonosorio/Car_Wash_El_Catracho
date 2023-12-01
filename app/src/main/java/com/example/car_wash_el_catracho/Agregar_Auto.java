@@ -1,5 +1,7 @@
 package com.example.car_wash_el_catracho;
 
+import static com.example.car_wash_el_catracho.MainActivity.isNetworkAvailable;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -146,7 +148,11 @@ public class Agregar_Auto extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                if (isNetworkAvailable(getApplicationContext())) {
+                    Toast.makeText(getApplicationContext(),"Envio fallido",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         requestQueue.add(request);

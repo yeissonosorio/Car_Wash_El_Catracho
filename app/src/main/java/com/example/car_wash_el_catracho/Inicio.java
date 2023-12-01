@@ -40,8 +40,11 @@ public class Inicio extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     finish();
-                }
-                else {
+                } else if (idu.equals("1")) {
+                    Intent intent = new Intent(getApplicationContext(), Cotizacion.class);
+                    startActivity(intent);
+                    finish();
+                } else {
                     id.setId(idu);
                     id.setNombre(nombre);
                     id.setPais(pais);
@@ -51,6 +54,7 @@ public class Inicio extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
+                
             }
         }, TIEMPO_DEMOSTRACION);
     }

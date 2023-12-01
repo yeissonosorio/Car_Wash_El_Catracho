@@ -98,12 +98,10 @@ public class Cotizacion extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Log.d("Respuesta", error.toString());
                 if (isNetworkAvailable(getApplicationContext())) {
-
+                    Toast.makeText(getApplicationContext(),"Envio fallido",Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
         requestQueue.add(jsonObjectRequest);
