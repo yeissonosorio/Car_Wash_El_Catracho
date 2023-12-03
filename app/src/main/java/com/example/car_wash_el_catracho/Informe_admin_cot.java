@@ -103,7 +103,6 @@ public class Informe_admin_cot extends AppCompatActivity {
                 }
                 else {
                     SendData();
-
                 }
             }
         });
