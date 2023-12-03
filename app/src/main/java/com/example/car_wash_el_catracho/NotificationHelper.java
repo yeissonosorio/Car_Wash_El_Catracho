@@ -36,9 +36,9 @@ public class NotificationHelper {
             }
         }
 
-        Intent intent = new Intent(context, Historial_Notificaciones.class);
+        Intent intent = new Intent(context, Navegacion.class);
         intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.logo)
@@ -51,4 +51,5 @@ public class NotificationHelper {
             notificationManager.notify(/* ID_DE_LA_NOTIFICACION */ 0, builder.build());
         }
     }
+
 }

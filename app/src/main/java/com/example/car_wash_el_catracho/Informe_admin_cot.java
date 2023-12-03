@@ -102,7 +102,8 @@ public class Informe_admin_cot extends AppCompatActivity {
                     precio.setError("No deje este campo vacio");
                 }
                 else {
-                    SendData();
+                    //SendData();
+                    enaviarnot();
                 }
             }
         });

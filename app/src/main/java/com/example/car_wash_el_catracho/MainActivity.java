@@ -248,7 +248,6 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("estado","0");
                 editor.putString("token",token);
                 editor.apply();
-
                 Intent intent = new Intent(getApplicationContext(), Navegacion.class);
                 startActivity(intent);
 
@@ -323,7 +322,6 @@ public class MainActivity extends AppCompatActivity {
             }
             startActivity(intent);
         } else {
-            Toast.makeText(this, "Las notificaciones están activadas", Toast.LENGTH_SHORT).show();
         }
     }
 

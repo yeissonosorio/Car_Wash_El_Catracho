@@ -17,12 +17,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String mensaje = remoteMessage.getData().get("mensaje");
             // Mostrar la notificación usando NotificationHelper
             NotificationHelper.mostrarNotificacion(this, titulo, mensaje);
+
         }
 
         if (remoteMessage.getNotification() != null) {
             String titulo = remoteMessage.getNotification().getTitle();
             String cuerpo = remoteMessage.getNotification().getBody();
-
             NotificationHelper.mostrarNotificacion(this, titulo, cuerpo);
         }
     }
