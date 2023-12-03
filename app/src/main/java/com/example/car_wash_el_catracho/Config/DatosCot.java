@@ -7,13 +7,14 @@ public class DatosCot {
     private  String idvehiculo;
     private  String marca;
     private  String modelo;
+    private String token;
     private  String year;
     private  String aceite;
     private  String fecha;
     private  String hora;
     private  String servicio;
 
-    public DatosCot(String id, String idcliente, String correo, String idvehiculo, String marca, String modelo, String year, String aceite, String fecha, String hora, String servicio) {
+    public DatosCot(String id, String idcliente, String correo, String idvehiculo, String marca, String modelo, String year, String aceite, String fecha, String hora, String servicio,String token) {
         this.id = id;
         this.idcliente = idcliente;
         this.correo = correo;
@@ -25,6 +26,7 @@ public class DatosCot {
         this.fecha = fecha;
         this.hora = hora;
         this.servicio = servicio;
+        this.token=token;
     }
 
     public String getId() {
@@ -113,5 +115,13 @@ public class DatosCot {
 
     public void setServicio(String servicio) {
         this.servicio = servicio;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

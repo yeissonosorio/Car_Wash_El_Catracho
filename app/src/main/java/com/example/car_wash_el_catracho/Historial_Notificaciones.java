@@ -55,6 +55,7 @@ public class Historial_Notificaciones extends AppCompatActivity {
         botonatras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                datos();
                 Intent intent = new Intent(getApplicationContext(), Navegacion.class);
                 startActivity(intent);
             }
@@ -146,6 +147,27 @@ public class Historial_Notificaciones extends AppCompatActivity {
             finish();
             Intent intent = new Intent(getApplicationContext(),Navegacion.class);
             startActivity(intent);
+            datos();
         }
+    }
+    public void datos(){
+        sharedPreferences = getSharedPreferences("Usuario", MODE_PRIVATE);
+
+        String idu=sharedPreferences.getString("id","");
+        String corr=sharedPreferences.getString("correo","");
+        String nombre=sharedPreferences.getString("nombre","");
+        String pais=sharedPreferences.getString("pais","");
+        String foto=sharedPreferences.getString("foto","");
+
+        id.setId(idu);
+        id.setNombre(nombre);
+        id.setCorreo(corr);
+        id.setPais(pais);
+        id.setFoto(foto);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("estado","0");
+        editor.apply();
+
     }
 }

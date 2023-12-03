@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +24,11 @@ import com.example.car_wash_el_catracho.Config.ResapiMethod;
 import com.example.car_wash_el_catracho.Config.Servicios;
 import com.example.car_wash_el_catracho.Config.id;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Informe_admin_cot extends AppCompatActivity {
 
@@ -165,6 +170,7 @@ public class Informe_admin_cot extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     Toast.makeText(getApplicationContext(), "Respuesta enviada", Toast.LENGTH_LONG).show();
+                    enaviarnot();
                     actualizar();
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -202,6 +208,48 @@ public class Informe_admin_cot extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }
+
+    }
+    public void enaviarnot(){
+        JSONObject notification = new JSONObject();
+        try {
+            notification.put("title", "Cotizacion");
+            notification.put("body", "miera la cotizacion");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject data = new JSONObject();
+        try {
+            data.put("to",getIntent().getStringExtra("token")); // Token del dispositivo destinatario
+            data.put("notification", notification);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    // Enviar la solicitud al servidor de FCM
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST,
+                "https://fcm.googleapis.com/fcm/send",
+                data,
+                response -> {
+
+                },
+                error -> {
+                    Log.e("Notificación", "Error al enviar la notificación: " + error.toString());
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "key=AAAADF4GRwk:APA91bGHP_nHirMbKqOpBryYmuMmdqV-yBfFVOzhinLnHG_FhwgJXpbexz2LtlpUri_Ytl-BayHd5oNe9u5Rmq7JtHhTO-KRHgUrEYCiFLqkDphvYGUIae4hiN6oPL6iGVGP5rF-OPCf"); // Reemplazar con tu clave de servidor de Firebase
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+
+        requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonObjectRequest);
 
     }
 }

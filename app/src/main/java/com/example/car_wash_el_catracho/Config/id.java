@@ -5,7 +5,7 @@ public class id {
 
     private static String nombre;
 
-
+    private static String token;
 
     private static String correo;
 
@@ -50,5 +50,13 @@ public class id {
 
     public static void setFoto(String Foto) {
         foto = Foto;
+    }
+
+    public static String getToken() {
+        return token;
+    }
+
+    public static void setToken(String Token) {
+        token = Token;
     }
 }

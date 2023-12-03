@@ -30,31 +30,30 @@ public class Inicio extends AppCompatActivity {
         String nombre=sharedPreferences.getString("nombre","");
         String pais=sharedPreferences.getString("pais","");
         String foto=sharedPreferences.getString("foto","");
-
+        String estado=sharedPreferences.getString("estado","");
+        String tok=sharedPreferences.getString("token","");
         //para hacer que actity se vea por 2 segundos
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //hacer si tiene informacion de usuario lo pueda ir al ativyti de proceso sino va al de inicio de sesion
-                if(idu.isEmpty()) {
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                if(corr.equals("")){
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(intent);
-                    finish();
-                } else if (idu.equals("1")) {
-                    Intent intent = new Intent(getApplicationContext(), Cotizacion.class);
+                }
+                else if(corr.equals("carwashelcatracho@gmail.com")){
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(intent);
-                    finish();
-                } else {
+                } else if (!corr.equals("carwashelcatracho@gmail.com")&&!corr.equals("")) {
+                    Intent intent = new Intent(getApplicationContext(),Navegacion.class);
                     id.setId(idu);
+                    id.setCorreo(corr);
                     id.setNombre(nombre);
                     id.setPais(pais);
-                    id.setCorreo(corr);
                     id.setFoto(foto);
-                    Intent intent = new Intent(getApplicationContext(), Navegacion.class);
+                    id.setToken(tok);
                     startActivity(intent);
-                    finish();
                 }
-                
             }
         }, TIEMPO_DEMOSTRACION);
     }

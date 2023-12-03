@@ -1,17 +1,27 @@
 package com.example.car_wash_el_catracho;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -35,6 +45,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +55,6 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
-
     int salir=0;
 
     private SharedPreferences sharedPreferences;
@@ -55,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText password,email;
     TextView txtolvi;
+    String token;
 
     ArrayList<String> listaD;
 
@@ -76,9 +87,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
         btnregis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     } else {
                                         // El inicio de sesión falló, manejar el error aquí
-                                        Toast.makeText(MainActivity.this, "Inicio de sesión fallido", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(MainActivity.this, "Correo o contraseña no valido", Toast.LENGTH_SHORT).show();
                                         Log.e("LoginError", task.getException().getMessage());
                                     }
                                 }
@@ -115,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
 
         password.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
@@ -126,6 +133,26 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        token = task.getResult();
+
+                        // Log and toast
+
+                        Log.d("token", token);
+                    }
+                });
+
+        checkAndShowNotificationSettings();
+
     }
 
     public void onBackPressed() {
@@ -149,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
     public  void entrar(){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, ResapiMethod.GetClienteF+
-                "?correo="+email.getText()+"&pass="+password.getText(), new Response.Listener<String>() {
+                "?correo="+email.getText(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Respuesta", response.toString());
@@ -196,10 +223,10 @@ public class MainActivity extends AppCompatActivity {
                 listaD.add(Pais);
                 listaD.add(fot);
             }
-            if(listaD.get(2).toString().equals("AdminCarwash@gmail.com")){
+            if(listaD.get(2).toString().equals("carwashelcatracho@gmail.com")){
                 sharedPreferences = getSharedPreferences("Usuario",MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("id","1");
+                editor.putString("correo",listaD.get(2).toString());
                 editor.apply();
                 Intent intent = new Intent(getApplicationContext(),Cotizacion.class);
                 startActivity(intent);
@@ -209,6 +236,8 @@ public class MainActivity extends AppCompatActivity {
                 id.setCorreo(listaD.get(2).toString());
                 id.setPais(listaD.get(3).toString());
                 id.setFoto(listaD.get(4).toString());
+                id.setToken(token);
+
                 sharedPreferences = getSharedPreferences("Usuario",MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("id",id.getId());
@@ -216,9 +245,13 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("correo",id.getCorreo());
                 editor.putString("pais",id.getPais());
                 editor.putString("foto",id.getFoto());
+                editor.putString("estado","0");
+                editor.putString("token",token);
                 editor.apply();
+
                 Intent intent = new Intent(getApplicationContext(), Navegacion.class);
                 startActivity(intent);
+
             }
 
 
@@ -253,5 +286,51 @@ public class MainActivity extends AppCompatActivity {
 
         return false;
     }
+
+    private boolean areNotificationsEnabled() {
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (notificationManager == null) {
+            return false;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Para Android Oreo y superior, verificamos la configuración de los canales de notificación
+            return notificationManager.getImportance() != NotificationManager.IMPORTANCE_NONE;
+        } else {
+            // Para versiones anteriores a Oreo, verificamos si están habilitadas las notificaciones
+            return Settings.Secure.getInt(
+                    getContentResolver(),
+                    "notification_enabled",
+                    0
+            ) == 1;
+        }
+    }
+
+    // Esta función muestra la ventana emergente para activar las notificaciones
+    private void showNotificationSettings() {
+        if (!areNotificationsEnabled()) {
+            Toast.makeText(this, "Las notificaciones están desactivadas", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+            } else {
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                intent.setData(Uri.parse("package:" + getPackageName()));
+            }
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Las notificaciones están activadas", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Llamar a esta función para mostrar la ventana emergente de configuración de notificaciones
+    private void checkAndShowNotificationSettings() {
+        showNotificationSettings();
+    }
+
 
 }

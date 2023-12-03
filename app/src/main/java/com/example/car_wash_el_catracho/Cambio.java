@@ -3,6 +3,7 @@ package com.example.car_wash_el_catracho;
 import static com.example.car_wash_el_catracho.MainActivity.isNetworkAvailable;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -55,6 +56,8 @@ public class Cambio extends Fragment {
         Button Reserva;
 
         String fecha,h;
+
+        private SharedPreferences sharedPreferences;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -197,6 +200,7 @@ public class Cambio extends Fragment {
             jsonservi.put("hora", cot.getHora());
             jsonservi.put("id_servicio", cot.getId_servicio());
             jsonservi.put("estado",cot.getEstado());
+            jsonservi.put("token",id.getToken());
         } catch (Exception ex) {
             ex.printStackTrace();
         }

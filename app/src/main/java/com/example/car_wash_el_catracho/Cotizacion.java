@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 
 public class Cotizacion extends AppCompatActivity {
     private int salir=0;
+    private SharedPreferences sharedPreferences;
     Button btncerrar;
     ListView lista;
     ArrayList<String> listaD;
@@ -49,6 +51,16 @@ public class Cotizacion extends AppCompatActivity {
         btncerrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sharedPreferences = getSharedPreferences("Usuario",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("id","");
+                editor.putString("nombre","");
+                editor.putString("correo","");
+                editor.putString("pais","");
+                editor.putString("foto","");
+                editor.putString("estado","");
+                editor.apply();
+
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
@@ -82,6 +94,7 @@ public class Cotizacion extends AppCompatActivity {
                             intent.putExtra("aceite",dato.get(position).getAceite());
                             intent.putExtra("fecha",dato.get(position).getFecha());
                             intent.putExtra("hora",dato.get(position).getHora());
+                            intent.putExtra("token",dato.get(position).getToken());
                             startActivity(intent);
                             finish();
                         }
@@ -98,7 +111,7 @@ public class Cotizacion extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Log.d("Respuesta", error.toString());
                 if (isNetworkAvailable(getApplicationContext())) {
-                    Toast.makeText(getApplicationContext(),"Envio fallido",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"No hay reservaciones",Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
                 }
@@ -123,7 +136,8 @@ public class Cotizacion extends AppCompatActivity {
             String fecha=jsonObject.getString("fecha");
             String hora=jsonObject.getString("hora");
             String servi=jsonObject.getString("servicio");
-            dato.add(new DatosCot(id,idcliente,Correo,idvehiculo,marca,modelo,year,aceite,fecha,hora,servi));
+            String tk=jsonObject.getString("token");
+            dato.add(new DatosCot(id,idcliente,Correo,idvehiculo,marca,modelo,year,aceite,fecha,hora,servi,tk));
         }
         FillList();
     }

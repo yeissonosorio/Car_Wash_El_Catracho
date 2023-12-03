@@ -46,6 +46,7 @@ public class Activity_User extends AppCompatActivity {
                 editor.putString("correo","");
                 editor.putString("pais","");
                 editor.putString("foto","");
+                editor.putString("estado","");
                 editor.apply();
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);

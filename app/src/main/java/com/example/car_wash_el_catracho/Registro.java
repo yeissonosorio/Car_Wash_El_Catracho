@@ -137,9 +137,8 @@ public class Registro extends AppCompatActivity {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if (task.isSuccessful()) {
-
+                                                                Toast.makeText(getApplicationContext(), "Por favor espere un momento", Toast.LENGTH_SHORT).show();
                                                                 validar(correo.getText().toString());
-
                                                             } else {
                                                                 // Error al enviar el correo de verificación
                                                                 Toast.makeText(getApplicationContext(), "Error al enviar el correo de verificación", Toast.LENGTH_SHORT).show();
@@ -151,8 +150,7 @@ public class Registro extends AppCompatActivity {
                                         // Puedes realizar acciones adicionales aquí después de la creación del usuario
                                     } else {
                                         // La creación del usuario falló, maneja el error aquí
-                                        Toast.makeText(getApplicationContext(), "La creación del usuario falló.", Toast.LENGTH_SHORT).show();
-                                        Log.e("CreateUserError", task.getException().getMessage());
+                                        correo.setError("Este correo ya existe");
                                     }
                                 }
                             });
@@ -208,6 +206,10 @@ public class Registro extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     Toast.makeText(getApplicationContext(), "Usuario Guardado", Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(intent);
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     Toast.makeText(getApplicationContext(),"Falllo",Toast.LENGTH_LONG).show();
