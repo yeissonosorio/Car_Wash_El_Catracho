@@ -116,7 +116,7 @@ public class Lista_Autos extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Log.d("Respuesta", error.toString());
                 if (isNetworkAvailable(getApplicationContext())) {
-                    Toast.makeText(getApplicationContext(), "No hubo respuesta", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Sin Autos Registrados", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
                 }

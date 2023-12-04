@@ -53,8 +53,7 @@ public class Navegacion extends AppCompatActivity {
         user = (ImageView) findViewById(R.id.btnusuario);
         botnoti = (ImageView) findViewById(R.id.btnnoti);
         outnoti = (ImageView) findViewById(R.id.outnoti);
-        outnoti.setVisibility(View.INVISIBLE);
-        outnoti.setVisibility(View.INVISIBLE);
+
 
         //los lleva a la acividad con la informacion de los usarios
         user.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +75,6 @@ public class Navegacion extends AppCompatActivity {
         });
         //se usas para desplazar los fragments
         boton();
-        //se usa para verificar si hay notificCIONES
-        entrar();
         //Muestar la imagen del usuario
         revelar();
     }
@@ -111,56 +108,5 @@ public class Navegacion extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         user.setImageBitmap(bitmap);
         return bitmap;
-    }
-
-    public  void entrar(){
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest jsonObjectRequest = new StringRequest(Request.Method.GET, ResapiMethod.GettNotiNumeor+"?id="+id.getId(), new Response.Listener<String>() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onResponse(String response) {
-                Log.d("Respuesta", response.toString());
-                try {
-                    Obtener(response);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-
-            }
-        }, new Response.ErrorListener(){
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Respuesta", error.toString());
-                if (isNetworkAvailable(getApplicationContext())) {
-                } else {
-                    Toast.makeText(getApplicationContext(), "No hay conexión a Internet", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-        });
-        requestQueue.add(jsonObjectRequest);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void Obtener(String response) throws JSONException {
-        JSONArray jsonArray = new JSONArray(response);
-        listaD = new ArrayList<>();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject jsonObject = jsonArray.getJSONObject(i);
-            String can = jsonObject.getString("numero");
-            listaD.add(can);
-        }
-        int numero = Integer.parseInt(listaD.get(0).toString());
-        if(numero>0){
-            botnoti.setVisibility(View.VISIBLE);
-            outnoti.setVisibility(View.VISIBLE);
-        }
-        else {
-            botnoti.setVisibility(View.INVISIBLE);
-            outnoti.setVisibility(View.INVISIBLE);
-        }
     }
 }
