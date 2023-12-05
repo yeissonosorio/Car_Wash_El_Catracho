@@ -88,7 +88,7 @@ public class Motor extends Fragment {
             public void onClick(View v) {
                 //verificar la fecha y hora
                 if(Hora.getSelectedItemId()!=0){
-                    //verifica cuantas reservas hay en los registros
+                    Toast.makeText(root.getContext(),"Espere el mensaje de confirmacion aparesca",Toast.LENGTH_LONG).show();
                     entrar(root);
                 }else {
                     Toast.makeText(root.getContext(),"Seleccione una hora",Toast.LENGTH_LONG).show();
@@ -163,6 +163,7 @@ public class Motor extends Fragment {
 
         }
     }
+
     private void SendData(View root) {
         RequestQueue requestQueue;
         h=Hora.getSelectedItem().toString();
