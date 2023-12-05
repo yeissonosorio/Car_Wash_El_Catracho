@@ -62,31 +62,18 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class Registro extends AppCompatActivity {
-
     static final int peticion_acceso_camara = 101;
     static final int peticion_toma_fotografica = 102;
-
     private RequestQueue requestQueue;
-
     ImageView imageView;
-
     Button crear;
-
     String idv="";
-
     ImageButton imagen;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-
     Spinner pais;
-
     EditText nombre,apellido,correo,contra,vericontra;
-
     Bitmap image;
-
     String imagenconver="";
-
-
     ArrayList<String> listaD;
 
     @Override
@@ -109,15 +96,14 @@ public class Registro extends AppCompatActivity {
         pais.setAdapter(adp);
 
 
-        crear.setOnClickListener(new View.OnClickListener() {
+       /* crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
-        });
+        });*/
 
         crear.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 if (veri() == true) {
@@ -129,7 +115,6 @@ public class Registro extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         //El usuario se crea
                                         FirebaseUser user = mAuth.getCurrentUser();
-
                                         // Envío del correo de verificación
                                         if (user != null) {
                                             user.sendEmailVerification()
@@ -140,7 +125,6 @@ public class Registro extends AppCompatActivity {
                                                                 Toast.makeText(getApplicationContext(), "Por favor espere un momento", Toast.LENGTH_SHORT).show();
                                                                 validar(correo.getText().toString());
                                                             } else {
-                                                                // Error al enviar el correo de verificación
                                                                 Toast.makeText(getApplicationContext(), "Error al enviar el correo de verificación", Toast.LENGTH_SHORT).show();
                                                                 Log.e("SendEmailError", task.getException().getMessage());
                                                             }
@@ -179,6 +163,7 @@ public class Registro extends AppCompatActivity {
 
     private void SendData() {
         requestQueue = Volley.newRequestQueue(this);
+
         Clientes clientes = new Clientes();
         clientes.setNombre(nombre.getText().toString());
         clientes.setApellido(apellido.getText().toString());

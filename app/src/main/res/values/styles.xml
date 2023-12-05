@@ -13,4 +13,5 @@
     <style name="CustomCalendarDialog">
         <item name="colorAccent">@color/custom_selector_color</item>
     </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light"></style>
 </resources>

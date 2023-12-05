@@ -58,28 +58,17 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class tipo_Lavado extends AppCompatActivity{
-
     private static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 1001;
     private FusedLocationProviderClient fusedLocationClient;
-
     String longi,lat,servicio,l,lon;
-
-
     Button btnvol,btnreseva;
-
     CalendarView calendario;
-
     int years,mes,dia;
-
     ImageButton btngps;
-
     String fecha,h;
-
     Spinner lugar, hora;
-
     TextView tipo, titul;
     ArrayList<String> listaD;
-
     int salir=0;
 
 
