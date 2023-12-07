@@ -108,7 +108,6 @@ public class historial extends Fragment {
             posadapter.add("Servicio: "+his.get(i).getServicio()+"\nFecha: "+date(his.get(i).getFecha())+" "+his.get(i).getHora());
         }
     }
-
     public String date(String fechaEnFormatoYMD){
         String[] partesFecha = fechaEnFormatoYMD.split("-");
         // Obtener año, mes y día por separado

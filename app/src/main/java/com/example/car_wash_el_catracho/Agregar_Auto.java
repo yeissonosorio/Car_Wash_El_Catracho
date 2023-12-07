@@ -156,7 +156,6 @@ public class Agregar_Auto extends AppCompatActivity {
             }
         });
         requestQueue.add(request);
-
         Intent intent = new Intent(getApplicationContext(),Navegacion.class);
         startActivity(intent);
     }

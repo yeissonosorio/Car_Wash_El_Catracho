@@ -148,4 +148,5 @@ public class Historial_Notificaciones extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
 }
