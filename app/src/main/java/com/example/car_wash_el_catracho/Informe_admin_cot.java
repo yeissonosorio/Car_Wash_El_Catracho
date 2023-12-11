@@ -214,7 +214,7 @@ public class Informe_admin_cot extends AppCompatActivity {
         JSONObject notification = new JSONObject();
         try {
             notification.put("title", "Cotizacion");
-            notification.put("body", "miera la cotizacion");
+            notification.put("body", "Nueva Cotización Recibida");
         } catch (JSONException e) {
             e.printStackTrace();
         }
